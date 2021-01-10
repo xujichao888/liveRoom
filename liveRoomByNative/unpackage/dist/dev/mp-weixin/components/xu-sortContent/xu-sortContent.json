@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "xu-sort-person-list": "/components/xu-sortPersonList/xu-sortPersonList"
+  },
+  "component": true
+}

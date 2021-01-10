@@ -1,0 +1,50 @@
+<template>
+	<view>
+		<view class="user1" @click="user1Nav">
+			<text>user1</text>
+		</view>
+		<view class="user2" @click="user2Nav">
+			<text>user2</text>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		onLoad() {
+			
+		},
+		methods:{
+			user1Nav(){
+				uni.navigateTo({
+					url:"/pages/index/index?msg=e06cbf6ab2143e323492cb0ce349df41892a88cf3fdc03dd6335cbdce64dbcca5"
+				})
+			},
+			user2Nav(){
+				uni.navigateTo({
+					url:"/pages/index/index?msg=fc43907c706b6c239796bd45ff2336bbafc30f1a8bc34bd953986e2bba912b0c5"
+				})
+			}
+			
+		}
+	}
+</script>
+
+<style scoped>
+	.user1{
+		width: 100rpx;
+		height: 100rpx;
+		background-color: #F2AB64;
+		margin-top: 100rpx;
+	}
+	.user2{
+		width: 100rpx;
+		height: 100rpx;
+		background-color: #005B5C;
+	}
+	.user3{
+		width: 100rpx;
+		height: 100rpx;
+		background-color: #005B5C;
+	}
+</style>

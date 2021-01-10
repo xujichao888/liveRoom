@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "d-text": "/dnvue-ui/components/d-text/d-text",
+    "xu-first-row-btn": "/components/xu-firstRowBtn/xu-firstRowBtn",
+    "xu-roomseat": "/components/xu-roomseat/xu-roomseat",
+    "d-popup": "/dnvue-ui/components/d-popup/d-popup",
+    "xu-popuptitle": "/components/xu-popuptitle/xu-popuptitle",
+    "xu-public-msg": "/components/xu-publicMsg/xu-publicMsg",
+    "xu-online-list": "/components/xu-onlineList/xu-onlineList",
+    "xu-more-content": "/components/xu-moreContent/xu-moreContent",
+    "xu-sort-content": "/components/xu-sortContent/xu-sortContent"
+  }
+}

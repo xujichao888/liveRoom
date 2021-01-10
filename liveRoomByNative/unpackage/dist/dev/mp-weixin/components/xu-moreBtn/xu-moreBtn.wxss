@@ -1,0 +1,20 @@
+
+.more-pubic-btn.data-v-34f8fc3a{
+	width: 100rpx;
+	height: 140rpx;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	margin-right: 40rpx;
+}
+.btn-image.data-v-34f8fc3a{
+	width: 100rpx;
+	height:100rpx;
+}
+.btn-text.data-v-34f8fc3a{
+	color: #FFFFFF;
+	font-size: 24rpx;
+	margin-top: 20rpx;
+	text-align: center;
+}
+

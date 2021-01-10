@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "d-text": "/dnvue-ui/components/d-text/d-text"
+  },
+  "component": true
+}

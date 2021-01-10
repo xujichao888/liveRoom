@@ -1,0 +1,1 @@
+<view class="more-pubic-btn data-v-34f8fc3a"><image class="btn-image data-v-34f8fc3a" src="{{imageUrl}}" mode="widthFix"></image><text class="btn-text data-v-34f8fc3a">{{text}}</text></view>

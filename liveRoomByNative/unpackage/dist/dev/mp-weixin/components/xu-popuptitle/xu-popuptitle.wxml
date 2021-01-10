@@ -1,0 +1,1 @@
+<view class="{{['popup-content data-v-5f02b820',(position=='left')?'positionLeft':'']}}"><d-text vue-id="5f06d608-1" size="32" text="{{text}}" color-custom="#fff" line-height="88rpx" class="data-v-5f02b820" bind:__l="__l"></d-text></view>

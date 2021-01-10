@@ -1,0 +1,15 @@
+
+.public-box.data-v-50a7adcc{
+	width: 750rpx;
+	height: 656rpx;
+	background-color: #021526;
+}
+.list-box.data-v-50a7adcc{
+	padding: 20rpx 20rpx;
+	width: 750rpx;
+	height: 656rpx;
+}
+.cells.data-v-50a7adcc{
+	padding: 20rpx;
+}
+

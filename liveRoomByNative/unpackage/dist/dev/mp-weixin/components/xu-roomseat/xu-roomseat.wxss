@@ -1,0 +1,63 @@
+
+.box.data-v-7ae010f8{
+	width:110rpx;
+	height: 194rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin-bottom: 40rpx;
+}
+.kongwei.data-v-7ae010f8{
+	width: 110rpx;
+	height: 110rpx;
+}
+.master-text.data-v-7ae010f8{
+	color: #FFFFFF;
+	font-size: 24rpx;
+	margin-top: 10rpx;
+	text-align: center;
+}
+.sex-icon.data-v-7ae010f8{
+	width: 16rpx;
+	height: 16rpx;
+}
+.income-num.data-v-7ae010f8{
+	color: #FFFFFF;
+	font-size: 24rpx;
+	margin-left: 10rpx;
+}
+.avatar.data-v-7ae010f8{
+	width: 107rpx;
+	height: 107rpx;
+	border-radius: 132rpx;
+	border-width: 3rpx;
+	border-style: solid;
+	border-color: #7060dc;
+}
+.mic-state.data-v-7ae010f8{
+	width: 40rpx;
+	height: 40rpx;
+}
+.mic-icon.data-v-7ae010f8{
+	width: 40rpx;
+	height: 40rpx;
+}
+.masterMic.data-v-7ae010f8{
+	position: fixed;
+	top: 260rpx;
+	left: 410rpx;
+}
+.sex-income.data-v-7ae010f8{
+	margin-top: 5rpx;
+	background-color: rgba(255,255,255,0.2);
+	border-radius: 45rpx;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	padding:5rpx;
+}
+

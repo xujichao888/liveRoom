@@ -1,0 +1,1 @@
+<view class="{{['first-row-container data-v-e954d6cc',(isActive)?'active':'']}}"><block wx:if="{{hasIcon}}"><image class="img data-v-e954d6cc" src="/static/icon/lanxin.png" mode="widthFix"></image></block><d-text vue-id="e94c9afc-1" color-custom="#00DCDF" text="{{text}}" line-height="50rpx" class="data-v-e954d6cc" bind:__l="__l"></d-text></view>

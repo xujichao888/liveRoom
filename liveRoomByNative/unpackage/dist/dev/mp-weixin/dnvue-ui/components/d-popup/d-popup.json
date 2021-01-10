@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "d-transition": "/dnvue-ui/components/d-transition/d-transition"
+  },
+  "component": true
+}

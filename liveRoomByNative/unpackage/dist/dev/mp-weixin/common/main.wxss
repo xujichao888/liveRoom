@@ -1,0 +1,1782 @@
+@charset "UTF-8";
+/* 主题色配置 */
+/* 文字颜色 */
+/* 边框颜色 */
+/* 黑 */
+/* 白 */
+/* 灰 */
+/* 红 */
+/* 橙 */
+/* 黄 */
+/* 绿 */
+/* 青 */
+/* 蓝 */
+/* 紫 */
+/* 文字尺寸 */
+/* 内外边距 */
+/* 圆角尺寸 */
+/*核心scss文件 */
+/************************************************
+  **********   dNvue-ui作者:邓琪昌    **********
+   **********    版本号:1.1.1        **********
+   *********************************************/
+/*****************************************************************************************************************
+******如果dnvue-ui应用到非法的程序中，比如涉及赌博，暴力等方面。因此产生纠纷等法律问题，dnvue-ui不承担任何责任********
+*****************************************************************************************************************/
+/* ====================
+		行向布局
+ ======================*/
+/* 如果存在direction:ltr，则从左到右排布；如果存在direction:rtl，则从右到左排布,默认direction:ltr。 */
+.row-wrap {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+/* 排布方向与flex-direction:row相反 */
+.row-reverse-wrap {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+/* //如果存在direction:ltr，则从左到右排布；如果存在direction:rtl，则从右到左排布,默认direction:ltr。 */
+.row-nowrap {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+}
+/* 排布方向与flex-direction:row相反 */
+.row-reverse-nowrap {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+}
+/* 是默认值，所有的 flex 成员项都排列在容器的前部（默认） */
+.row-start {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+/* 成员项排列在容器的后部 */
+.row-end {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+/* 成员项排列在容器居中 */
+.row-center {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+/* 横向两端对齐,位于各行之间留有空白的容器内 */
+.row-space-between {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+/* 横向两端对齐,位于各行之前、之间、之后都留有空白的容器内 */
+.row-space-around {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+}
+/* 行垂直居中 */
+.row-middle-center {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+/* 垂直横向两端对齐,位于各行之前、之间、之后都留有空白的容器内 */
+.row-middle-around {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+}
+/* 垂直横向两端对齐,位于各行之间留有空白的容器内 */
+.row-middle-between {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+/* 则是上对齐，所有的成员项排列在容器顶部； */
+.row-top {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+}
+/* 是中间对齐，所有成员项都垂直地居中显示。 */
+.row-middle {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+/* 是底部对齐，所有成员项都垂直地居底显示。 */
+.row-bottom {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+          align-items: flex-end;
+}
+/* ====================
+		列向布局
+ ======================*/
+/* 从上到下排布 */
+.column-column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+/* 从下到上排布 */
+.column-reverse {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+/* 是默认值，所有的 flex 成员项都排列在容器的前部（默认） */
+.column-top {
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+/* 成员项排列在容器的后部 */
+.column-bottom {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+/* 成员项排列在容器垂直中间 */
+.column-middle {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+/* 则是上对齐，所有的成员项排列在容器顶部； */
+.column-start {
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+}
+/* 是中间对齐，所有成员项都垂直地居中显示。 */
+.column-center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+/* 是底部对齐，所有成员项都垂直地居底显示。 */
+.column-end {
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+          align-items: flex-end;
+}
+/* 列垂直居中 */
+.column-middle-center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+/* ====================
+		字体图标
+ ======================*/
+.dIcon {
+  font-family: dIcon;
+}
+/* ====================
+		边框颜色
+=======================*/
+.border {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #DCDFE6;
+}
+.border-left {
+  border-left-width: 2rpx;
+  border-style: solid;
+  border-color: #DCDFE6;
+}
+.border-right {
+  border-right-width: 2rpx;
+  border-style: solid;
+  border-color: #DCDFE6;
+}
+.border-top {
+  border-top-width: 2rpx;
+  border-style: solid;
+  border-color: #DCDFE6;
+}
+.border-bottom {
+  border-bottom-width: 2rpx;
+  border-style: solid;
+  border-color: #DCDFE6;
+}
+.border-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #E4E7ED;
+}
+.border-deep-left {
+  border-left-width: 2rpx;
+  border-style: solid;
+  border-color: #E4E7ED;
+}
+.border-deep-right {
+  border-right-width: 2rpx;
+  border-style: solid;
+  border-color: #E4E7ED;
+}
+.border-deep-top {
+  border-top-width: 2rpx;
+  border-style: solid;
+  border-color: #E4E7ED;
+}
+.border-deep-bottom {
+  border-bottom-width: 2rpx;
+  border-style: solid;
+  border-color: #E4E7ED;
+}
+.border-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #EDEEF5;
+}
+.border-shallow-left {
+  border-left-width: 2rpx;
+  border-style: solid;
+  border-color: #EDEEF5;
+}
+.border-shallow-right {
+  border-right-width: 2rpx;
+  border-style: solid;
+  border-color: #EDEEF5;
+}
+.border-shallow-top {
+  border-top-width: 2rpx;
+  border-style: solid;
+  border-color: #EDEEF5;
+}
+.border-shallow-bottom {
+  border-bottom-width: 2rpx;
+  border-style: solid;
+  border-color: #EDEEF5;
+}
+.border-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #F2F6FC;
+}
+.border-light-left {
+  border-left-width: 2rpx;
+  border-style: solid;
+  border-color: #F2F6FC;
+}
+.border-light-right {
+  border-right-width: 2rpx;
+  border-style: solid;
+  border-color: #F2F6FC;
+}
+.border-light-top {
+  border-top-width: 2rpx;
+  border-style: solid;
+  border-color: #F2F6FC;
+}
+.border-light-bottom {
+  border-bottom-width: 2rpx;
+  border-style: solid;
+  border-color: #F2F6FC;
+}
+/* 主题色 */
+.border-theme {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #409EFF;
+}
+.border-theme-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #3967FF;
+}
+.border-theme-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #BBCDFF;
+}
+.border-theme-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #E7EDFF;
+}
+/* 黑 */
+.border-black {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #000000;
+}
+.border-black-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #333333;
+}
+.border-black-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #666666;
+}
+.border-black-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #999999;
+}
+/* 白 */
+.border-white {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FFFFFF;
+}
+.border-white-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #F8F8F8;
+}
+.border-white-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #F4F4F4;
+}
+.border-white-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #F1F1F1;
+}
+/* 灰 */
+.border-gray {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #999999;
+}
+.border-gray-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #828282;
+}
+.border-gray-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #CDCDCD;
+}
+.border-gray-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #F4F4F4;
+}
+/* 红 */
+.border-red {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FA3534;
+}
+.border-red-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #DD6161;
+}
+.border-red-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FAB6B6;
+}
+.border-red-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FEF0F0;
+}
+/* 橙 */
+.border-orange {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FFA500;
+}
+.border-orange-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FF8C00;
+}
+.border-orange-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FFDA9D;
+}
+.border-orange-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FFEBCD;
+}
+/* 黄 */
+.border-yellow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FFF259;
+}
+.border-yellow-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FFD700;
+}
+.border-yellow-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FAFAD2;
+}
+.border-yellow-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #FFFFED;
+}
+/* 绿 */
+.border-green {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #19BE6B;
+}
+.border-green-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #18B566;
+}
+.border-green-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #71D5A1;
+}
+.border-green-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #DBF1E1;
+}
+/* 青 */
+.border-cyan {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #63FFFA;
+}
+.border-cyan-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #00FFFF;
+}
+.border-cyan-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #BBFFFD;
+}
+.border-cyan-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #E4FFFD;
+}
+/* 蓝 */
+.border-blue {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #409EFF;
+}
+.border-blue-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #3967FF;
+}
+.border-blue-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #BBCDFF;
+}
+.border-blue-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #E7EDFF;
+}
+/* 紫 */
+.border-purple {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #BA55D3;
+}
+.border-purple-deep {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #BF3EFF;
+}
+.border-purple-shallow {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #E0AAFF;
+}
+.border-purple-light {
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #EED2EE;
+}
+/* ====================
+		背景色
+=======================*/
+/* 主题色 */
+.bg-theme {
+  background-color: #409EFF;
+}
+.bg-theme-deep {
+  background-color: #3967FF;
+}
+.bg-theme-shallow {
+  background-color: #BBCDFF;
+}
+.bg-theme-light {
+  background-color: #E7EDFF;
+}
+/* 黑 */
+.bg-black {
+  background-color: #000000;
+}
+.bg-black-deep {
+  background-color: #333333;
+}
+.bg-black-shallow {
+  background-color: #666666;
+}
+.bg-black-light {
+  background-color: #999999;
+}
+/* 白 */
+.bg-white {
+  background-color: #FFFFFF;
+}
+.bg-white-deep {
+  background-color: #F8F8F8;
+}
+.bg-white-shallow {
+  background-color: #F4F4F4;
+}
+.bg-white-light {
+  background-color: #F1F1F1;
+}
+/* 灰 */
+.bg-gray {
+  background-color: #999999;
+}
+.bg-gray-deep {
+  background-color: #828282;
+}
+.bg-gray-shallow {
+  background-color: #CDCDCD;
+}
+.bg-gray-light {
+  background-color: #F4F4F4;
+}
+/* 红 */
+.bg-red {
+  background-color: #FA3534;
+}
+.bg-red-deep {
+  background-color: #DD6161;
+}
+.bg-red-shallow {
+  background-color: #FAB6B6;
+}
+.bg-red-light {
+  background-color: #FEF0F0;
+}
+/* 橙 */
+.bg-orange {
+  background-color: #FFA500;
+}
+.bg-orange-deep {
+  background-color: #FF8C00;
+}
+.bg-orange-shallow {
+  background-color: #FFDA9D;
+}
+.bg-orange-light {
+  background-color: #FFEBCD;
+}
+/* 黄 */
+.bg-yellow {
+  background-color: #FFF259;
+}
+.bg-yellow-deep {
+  background-color: #FFD700;
+}
+.bg-yellow-shallow {
+  background-color: #FAFAD2;
+}
+.bg-yellow-light {
+  background-color: #FFFFED;
+}
+/* 绿 */
+.bg-green {
+  background-color: #19BE6B;
+}
+.bg-green-deep {
+  background-color: #18B566;
+}
+.bg-green-shallow {
+  background-color: #71D5A1;
+}
+.bg-green-light {
+  background-color: #DBF1E1;
+}
+/* 青 */
+.bg-cyan {
+  background-color: #63FFFA;
+}
+.bg-cyan-deep {
+  background-color: #00FFFF;
+}
+.bg-cyan-shallow {
+  background-color: #BBFFFD;
+}
+.bg-cyan-light {
+  background-color: #E4FFFD;
+}
+/* 蓝 */
+.bg-blue {
+  background-color: #409EFF;
+}
+.bg-blue-deep {
+  background-color: #3967FF;
+}
+.bg-blue-shallow {
+  background-color: #BBCDFF;
+}
+.bg-blue-light {
+  background-color: #E7EDFF;
+}
+/* 紫 */
+.bg-purple {
+  background-color: #BA55D3;
+}
+.bg-purple-deep {
+  background-color: #BF3EFF;
+}
+.bg-purple-shallow {
+  background-color: #E0AAFF;
+}
+.bg-purple-light {
+  background-color: #EED2EE;
+}
+/* ====================
+		文本色
+=======================*/
+.color-main {
+  color: #333333;
+}
+.color-content {
+  color: #666666;
+}
+.color-tips {
+  color: #999999;
+}
+.color-light {
+  color: #CDCDCD;
+}
+/* 主题色 */
+.color-theme {
+  color: #409EFF;
+}
+.color-theme-deep {
+  color: #3967FF;
+}
+.color-theme-shallow {
+  color: #BBCDFF;
+}
+.color-theme-light {
+  color: #E7EDFF;
+}
+/* 黑 */
+.color-black {
+  color: #000000;
+}
+.color-black-deep {
+  color: #333333;
+}
+.color-black-shallow {
+  color: #666666;
+}
+.color-black-light {
+  color: #999999;
+}
+/* 白 */
+.color-white {
+  color: #FFFFFF;
+}
+.color-white-deep {
+  color: #F8F8F8;
+}
+.color-white-shallow {
+  color: #F4F4F4;
+}
+.color-white-light {
+  color: #F1F1F1;
+}
+/* 灰 */
+.color-gray {
+  color: #999999;
+}
+.color-gray-deep {
+  color: #828282;
+}
+.color-gray-shallow {
+  color: #CDCDCD;
+}
+.color-gray-light {
+  color: #F4F4F4;
+}
+/* 红 */
+.color-red {
+  color: #FA3534;
+}
+.color-red-deep {
+  color: #DD6161;
+}
+.color-red-shallow {
+  color: #FAB6B6;
+}
+.color-red-light {
+  color: #FEF0F0;
+}
+/* 橙 */
+.color-orange {
+  color: #FFA500;
+}
+.color-orange-deep {
+  color: #FF8C00;
+}
+.color-orange-shallow {
+  color: #FFDA9D;
+}
+.color-orange-light {
+  color: #FFEBCD;
+}
+/* 黄 */
+.color-yellow {
+  color: #FFF259;
+}
+.color-yellow-deep {
+  color: #FFD700;
+}
+.color-yellow-shallow {
+  color: #FAFAD2;
+}
+.color-yellow-light {
+  color: #FFFFED;
+}
+/* 绿 */
+.color-green {
+  color: #19BE6B;
+}
+.color-green-deep {
+  color: #18B566;
+}
+.color-green-shallow {
+  color: #71D5A1;
+}
+.color-green-light {
+  color: #DBF1E1;
+}
+/* 青 */
+.color-cyan {
+  color: #63FFFA;
+}
+.color-cyan-deep {
+  color: #00FFFF;
+}
+.color-cyan-shallow {
+  color: #BBFFFD;
+}
+.color-cyan-light {
+  color: #E4FFFD;
+}
+/* 蓝 */
+.color-blue {
+  color: #409EFF;
+}
+.color-blue-deep {
+  color: #3967FF;
+}
+.color-blue-shallow {
+  color: #BBCDFF;
+}
+.color-blue-light {
+  color: #E7EDFF;
+}
+/* 紫 */
+.color-purple {
+  color: #BA55D3;
+}
+.color-purple-deep {
+  color: #BF3EFF;
+}
+.color-purple-shallow {
+  color: #E0AAFF;
+}
+.color-purple-light {
+  color: #EED2EE;
+}
+/* ====================
+		内、外边距
+ ======================*/
+/* 外边距 */
+.margin-xs {
+  margin: 8rpx;
+}
+/* 外边距顶部距离 */
+.margin-top-xs {
+  margin-top: 8rpx;
+}
+/* 外边距底部距离 */
+.margin-bottom-xs {
+  margin-bottom: 8rpx;
+}
+/* 外边距左边距离 */
+.margin-left-xs {
+  margin-left: 8rpx;
+}
+/* 外边距右边距离 */
+.margin-right-xs {
+  margin-right: 8rpx;
+}
+/* 水平方向外边距 */
+.margin-lr-xs {
+  margin-left: 8rpx;
+  margin-right: 8rpx;
+}
+/* 左右上方向外边距 */
+.margin-lrt-xs {
+  margin-left: 8rpx;
+  margin-right: 8rpx;
+  margin-top: 8rpx;
+}
+/* 左右下方向外边距 */
+.margin-lrb-xs {
+  margin-left: 8rpx;
+  margin-right: 8rpx;
+  margin-bottom: 8rpx;
+}
+/* 垂直方向外边距 */
+.margin-tb-xs {
+  margin-top: 8rpx;
+  margin-bottom: 8rpx;
+}
+/* 内边距*/
+.padding-xs {
+  padding: 8rpx;
+}
+/* 内边距顶部距离 */
+.padding-top-xs {
+  padding-top: 8rpx;
+}
+/* 内边距底部距离 */
+.padding-bottom-xs {
+  padding-bottom: 8rpx;
+}
+/* 内边距左边距离 */
+.padding-left-xs {
+  padding-left: 8rpx;
+}
+/* 内边距右边距离 */
+.padding-right-xs {
+  padding-right: 8rpx;
+}
+/* 水平方向内边距 */
+.padding-lr-xs {
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+}
+/* 左右上方向内边距 */
+.padding-lrt-xs {
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+  padding-top: 8rpx;
+}
+/* 左右下方向内边距 */
+.padding-lrb-xs {
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+  padding-bottom: 8rpx;
+}
+/* 垂直方向内边距 */
+.padding-tb-xs {
+  padding-top: 8rpx;
+  padding-bottom: 8rpx;
+}
+/* 外边距 */
+.margin-sm {
+  margin: 16rpx;
+}
+/* 外边距顶部距离 */
+.margin-top-sm {
+  margin-top: 16rpx;
+}
+/* 外边距底部距离 */
+.margin-bottom-sm {
+  margin-bottom: 16rpx;
+}
+/* 外边距左边距离 */
+.margin-left-sm {
+  margin-left: 16rpx;
+}
+/* 外边距右边距离 */
+.margin-right-sm {
+  margin-right: 16rpx;
+}
+/* 水平方向外边距 */
+.margin-lr-sm {
+  margin-left: 16rpx;
+  margin-right: 16rpx;
+}
+/* 左右上方向外边距 */
+.margin-lrt-sm {
+  margin-left: 16rpx;
+  margin-right: 16rpx;
+  margin-top: 16rpx;
+}
+/* 左右下方向外边距 */
+.margin-lrb-sm {
+  margin-left: 16rpx;
+  margin-right: 16rpx;
+  margin-bottom: 16rpx;
+}
+/* 垂直方向外边距 */
+.margin-tb-sm {
+  margin-top: 16rpx;
+  margin-bottom: 16rpx;
+}
+/* 内边距*/
+.padding-sm {
+  padding: 16rpx;
+}
+/* 内边距顶部距离 */
+.padding-top-sm {
+  padding-top: 16rpx;
+}
+/* 内边距底部距离 */
+.padding-bottom-sm {
+  padding-bottom: 16rpx;
+}
+/* 内边距左边距离 */
+.padding-left-sm {
+  padding-left: 16rpx;
+}
+/* 内边距右边距离 */
+.padding-right-sm {
+  padding-right: 16rpx;
+}
+/* 水平方向内边距 */
+.padding-lr-sm {
+  padding-left: 16rpx;
+  padding-right: 16rpx;
+}
+/* 左右上方向内边距 */
+.padding-lrt-sm {
+  padding-left: 16rpx;
+  padding-right: 16rpx;
+  padding-top: 16rpx;
+}
+/* 左右下方向内边距 */
+.padding-lrb-sm {
+  padding-left: 16rpx;
+  padding-right: 16rpx;
+  padding-bottom: 16rpx;
+}
+/* 垂直方向内边距 */
+.padding-tb-sm {
+  padding-top: 16rpx;
+  padding-bottom: 16rpx;
+}
+/* 外边距 */
+.margin-md {
+  margin: 24rpx;
+}
+/* 外边距顶部距离 */
+.margin-top-md {
+  margin-top: 24rpx;
+}
+/* 外边距底部距离 */
+.margin-bottom-md {
+  margin-bottom: 24rpx;
+}
+/* 外边距左边距离 */
+.margin-left-md {
+  margin-left: 24rpx;
+}
+/* 外边距右边距离 */
+.margin-right-md {
+  margin-right: 24rpx;
+}
+/* 水平方向外边距 */
+.margin-lr-md {
+  margin-left: 24rpx;
+  margin-right: 24rpx;
+}
+/* 左右上方向外边距 */
+.margin-lrt-md {
+  margin-left: 24rpx;
+  margin-right: 24rpx;
+  margin-top: 24rpx;
+}
+/* 左右下方向外边距 */
+.margin-lrb-md {
+  margin-left: 24rpx;
+  margin-right: 24rpx;
+  margin-bottom: 24rpx;
+}
+/* 垂直方向外边距 */
+.margin-tb-md {
+  margin-top: 24rpx;
+  margin-bottom: 24rpx;
+}
+/* 内边距*/
+.padding-md {
+  padding: 24rpx;
+}
+/* 内边距顶部距离 */
+.padding-top-md {
+  padding-top: 24rpx;
+}
+/* 内边距底部距离 */
+.padding-bottom-md {
+  padding-bottom: 24rpx;
+}
+/* 内边距左边距离 */
+.padding-left-md {
+  padding-left: 24rpx;
+}
+/* 内边距右边距离 */
+.padding-right-md {
+  padding-right: 24rpx;
+}
+/* 水平方向内边距 */
+.padding-lr-md {
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+}
+/* 左右上方向内边距 */
+.padding-lrt-md {
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+  padding-top: 24rpx;
+}
+/* 左右下方向内边距 */
+.padding-lrb-md {
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+  padding-bottom: 24rpx;
+}
+/* 垂直方向内边距 */
+.padding-tb-md {
+  padding-top: 24rpx;
+  padding-bottom: 24rpx;
+}
+/* 外边距 */
+.margin-lg {
+  margin: 32rpx;
+}
+/* 外边距顶部距离 */
+.margin-top-lg {
+  margin-top: 32rpx;
+}
+/* 外边距底部距离 */
+.margin-bottom-lg {
+  margin-bottom: 32rpx;
+}
+/* 外边距左边距离 */
+.margin-left-lg {
+  margin-left: 32rpx;
+}
+/* 外边距右边距离 */
+.margin-right-lg {
+  margin-right: 32rpx;
+}
+/* 水平方向外边距 */
+.margin-lr-lg {
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+}
+/* 左右上方向外边距 */
+.margin-lrt-lg {
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+  margin-top: 32rpx;
+}
+/* 左右下方向外边距 */
+.margin-lrb-lg {
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+  margin-bottom: 32rpx;
+}
+/* 垂直方向外边距 */
+.margin-tb-lg {
+  margin-top: 32rpx;
+  margin-bottom: 32rpx;
+}
+/* 内边距*/
+.padding-lg {
+  padding: 32rpx;
+}
+/* 内边距顶部距离 */
+.padding-top-lg {
+  padding-top: 32rpx;
+}
+/* 内边距底部距离 */
+.padding-bottom-lg {
+  padding-bottom: 32rpx;
+}
+/* 内边距左边距离 */
+.padding-left-lg {
+  padding-left: 32rpx;
+}
+/* 内边距右边距离 */
+.padding-right-lg {
+  padding-right: 32rpx;
+}
+/* 水平方向内边距 */
+.padding-lr-lg {
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+}
+/* 左右上方向内边距 */
+.padding-lrt-lg {
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  padding-top: 32rpx;
+}
+/* 左右下方向内边距 */
+.padding-lrb-lg {
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  padding-bottom: 32rpx;
+}
+/* 垂直方向内边距 */
+.padding-tb-lg {
+  padding-top: 32rpx;
+  padding-bottom: 32rpx;
+}
+/* 外边距 */
+.margin-xl {
+  margin: 40rpx;
+}
+/* 外边距顶部距离 */
+.margin-top-xl {
+  margin-top: 40rpx;
+}
+/* 外边距底部距离 */
+.margin-bottom-xl {
+  margin-bottom: 40rpx;
+}
+/* 外边距左边距离 */
+.margin-left-xl {
+  margin-left: 40rpx;
+}
+/* 外边距右边距离 */
+.margin-right-xl {
+  margin-right: 40rpx;
+}
+/* 水平方向外边距 */
+.margin-lr-xl {
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+}
+/* 左右上方向外边距 */
+.margin-lrt-xl {
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  margin-top: 40rpx;
+}
+/* 左右下方向外边距 */
+.margin-lrb-xl {
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  margin-bottom: 40rpx;
+}
+/* 垂直方向外边距 */
+.margin-tb-xl {
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+}
+/* 内边距*/
+.padding-xl {
+  padding: 40rpx;
+}
+/* 内边距顶部距离 */
+.padding-top-xl {
+  padding-top: 40rpx;
+}
+/* 内边距底部距离 */
+.padding-bottom-xl {
+  padding-bottom: 40rpx;
+}
+/* 内边距左边距离 */
+.padding-left-xl {
+  padding-left: 40rpx;
+}
+/* 内边距右边距离 */
+.padding-right-xl {
+  padding-right: 40rpx;
+}
+/* 水平方向内边距 */
+.padding-lr-xl {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+}
+/* 左右上方向内边距 */
+.padding-lrt-xl {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  padding-top: 40rpx;
+}
+/* 左右下方向内边距 */
+.padding-lrb-xl {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  padding-bottom: 40rpx;
+}
+/* 垂直方向内边距 */
+.padding-tb-xl {
+  padding-top: 40rpx;
+  padding-bottom: 40rpx;
+}
+/* 外边距 */
+.margin-xxl {
+  margin: 56rpx;
+}
+/* 外边距顶部距离 */
+.margin-top-xxl {
+  margin-top: 56rpx;
+}
+/* 外边距底部距离 */
+.margin-bottom-xxl {
+  margin-bottom: 56rpx;
+}
+/* 外边距左边距离 */
+.margin-left-xxl {
+  margin-left: 56rpx;
+}
+/* 外边距右边距离 */
+.margin-right-xxl {
+  margin-right: 56rpx;
+}
+/* 水平方向外边距 */
+.margin-lr-xxl {
+  margin-left: 56rpx;
+  margin-right: 56rpx;
+}
+/* 左右上方向外边距 */
+.margin-lrt-xxl {
+  margin-left: 56rpx;
+  margin-right: 56rpx;
+  margin-top: 56rpx;
+}
+/* 左右下方向外边距 */
+.margin-lrb-xxl {
+  margin-left: 56rpx;
+  margin-right: 56rpx;
+  margin-bottom: 56rpx;
+}
+/* 垂直方向外边距 */
+.margin-tb-xxl {
+  margin-top: 56rpx;
+  margin-bottom: 56rpx;
+}
+/* 内边距*/
+.padding-xxl {
+  padding: 56rpx;
+}
+/* 内边距顶部距离 */
+.padding-top-xxl {
+  padding-top: 56rpx;
+}
+/* 内边距底部距离 */
+.padding-bottom-xxl {
+  padding-bottom: 56rpx;
+}
+/* 内边距左边距离 */
+.padding-left-xxl {
+  padding-left: 56rpx;
+}
+/* 内边距右边距离 */
+.padding-right-xxl {
+  padding-right: 56rpx;
+}
+/* 水平方向内边距 */
+.padding-lr-xxl {
+  padding-left: 56rpx;
+  padding-right: 56rpx;
+}
+/* 左右上方向内边距 */
+.padding-lrt-xxl {
+  padding-left: 56rpx;
+  padding-right: 56rpx;
+  padding-top: 56rpx;
+}
+/* 左右下方向内边距 */
+.padding-lrb-xxl {
+  padding-left: 56rpx;
+  padding-right: 56rpx;
+  padding-bottom: 56rpx;
+}
+/* 垂直方向内边距 */
+.padding-tb-xxl {
+  padding-top: 56rpx;
+  padding-bottom: 56rpx;
+}
+/* ====================
+		文字尺寸
+ ======================*/
+.text-xs {
+  font-size: 20rpx !important;
+}
+.text-sm {
+  font-size: 24rpx !important;
+}
+.text-md {
+  font-size: 28rpx !important;
+}
+.text-lg {
+  font-size: 32rpx !important;
+}
+.text-xl {
+  font-size: 48rpx !important;
+}
+.text-xxl {
+  font-size: 64rpx !important;
+}
+/* ====================
+		圆角尺寸
+ ======================*/
+/* 全角 */
+.radius-xs {
+  border-radius: 8rpx;
+}
+/* 左上角 */
+.radius-lt-xs {
+  border-top-left-radius: 8rpx;
+}
+/* 上左右角 */
+.radius-lrt-xs {
+  border-top-left-radius: 8rpx;
+  border-top-right-radius: 8rpx;
+}
+/* 右上角 */
+.radius-rt-xs {
+  border-top-right-radius: 8rpx;
+}
+/* 左下角 */
+.radius-rb-xs {
+  border-bottom-right-radius: 8rpx;
+}
+/* 下左右角 */
+.radius-lrb-xs {
+  border-bottom-right-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
+}
+/* 右下角 */
+.radius-lb-xs {
+  border-bottom-left-radius: 8rpx;
+}
+/* 全角 */
+.radius-sm {
+  border-radius: 12rpx;
+}
+/* 左上角 */
+.radius-lt-sm {
+  border-top-left-radius: 12rpx;
+}
+/* 上左右角 */
+.radius-lrt-sm {
+  border-top-left-radius: 12rpx;
+  border-top-right-radius: 12rpx;
+}
+/* 右上角 */
+.radius-rt-sm {
+  border-top-right-radius: 12rpx;
+}
+/* 左下角 */
+.radius-rb-sm {
+  border-bottom-right-radius: 12rpx;
+}
+/* 下左右角 */
+.radius-lrb-sm {
+  border-bottom-right-radius: 12rpx;
+  border-bottom-left-radius: 12rpx;
+}
+/* 右下角 */
+.radius-lb-sm {
+  border-bottom-left-radius: 12rpx;
+}
+/* 全角 */
+.radius-md {
+  border-radius: 16rpx;
+}
+/* 左上角 */
+.radius-lt-md {
+  border-top-left-radius: 16rpx;
+}
+/* 上左右角 */
+.radius-lrt-md {
+  border-top-left-radius: 16rpx;
+  border-top-right-radius: 16rpx;
+}
+/* 右上角 */
+.radius-rt-md {
+  border-top-right-radius: 16rpx;
+}
+/* 左下角 */
+.radius-rb-md {
+  border-bottom-right-radius: 16rpx;
+}
+/* 下左右角 */
+.radius-lrb-md {
+  border-bottom-right-radius: 16rpx;
+  border-bottom-left-radius: 16rpx;
+}
+/* 右下角 */
+.radius-lb-md {
+  border-bottom-left-radius: 16rpx;
+}
+/* 全角 */
+.radius-lg {
+  border-radius: 20rpx;
+}
+/* 左上角 */
+.radius-lt-lg {
+  border-top-left-radius: 20rpx;
+}
+/* 上左右角 */
+.radius-lrt-lg {
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+}
+/* 右上角 */
+.radius-rt-lg {
+  border-top-right-radius: 20rpx;
+}
+/* 左下角 */
+.radius-rb-lg {
+  border-bottom-right-radius: 20rpx;
+}
+/* 下左右角 */
+.radius-lrb-lg {
+  border-bottom-right-radius: 20rpx;
+  border-bottom-left-radius: 20rpx;
+}
+/* 右下角 */
+.radius-lb-lg {
+  border-bottom-left-radius: 20rpx;
+}
+/* 全角 */
+.radius-xl {
+  border-radius: 100rpx;
+}
+/* 左上角 */
+.radius-lt-xl {
+  border-top-left-radius: 100rpx;
+}
+/* 上左右角 */
+.radius-lrt-xl {
+  border-top-left-radius: 100rpx;
+  border-top-right-radius: 100rpx;
+}
+/* 右上角 */
+.radius-rt-xl {
+  border-top-right-radius: 100rpx;
+}
+/* 左下角 */
+.radius-rb-xl {
+  border-bottom-right-radius: 100rpx;
+}
+/* 下左右角 */
+.radius-lrb-xl {
+  border-bottom-right-radius: 100rpx;
+  border-bottom-left-radius: 100rpx;
+}
+/* 右下角 */
+.radius-lb-xl {
+  border-bottom-left-radius: 100rpx;
+}
+/* 全角 */
+.radius-xxl {
+  border-radius: 200rpx;
+}
+/* 左上角 */
+.radius-lt-xxl {
+  border-top-left-radius: 200rpx;
+}
+/* 上左右角 */
+.radius-lrt-xxl {
+  border-top-left-radius: 200rpx;
+  border-top-right-radius: 200rpx;
+}
+/* 右上角 */
+.radius-rt-xxl {
+  border-top-right-radius: 200rpx;
+}
+/* 左下角 */
+.radius-rb-xxl {
+  border-bottom-right-radius: 200rpx;
+}
+/* 下左右角 */
+.radius-lrb-xxl {
+  border-bottom-right-radius: 200rpx;
+  border-bottom-left-radius: 200rpx;
+}
+/* 右下角 */
+.radius-lb-xxl {
+  border-bottom-left-radius: 200rpx;
+}
+/* ====================
+		定位
+ ======================*/
+.position-relative {
+  position: relative;
+}
+/* 相对定位 */
+.position-absolute {
+  position: absolute;
+}
+/* 绝对定位 */
+.position-absolute-lt {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+/* 左上角 */
+.position-absolute-rt {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+/* 右上角 */
+.position-absolute-lb {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+/* 左下角 */
+.position-absolute-rb {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+/* 右下角 */
+/* 保证元素在页面窗口中的对应位置显示 */
+.position-fixed {
+  position: fixed;
+}
+/* 指的是仅当元素滚动到页面之外时，元素会固定在页面窗口的顶部 */
+.position-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+/* =====================
+		基础CLASS
+ =======================*/
+/* 超出行数隐藏（ellipsis-{1-12}）*/
+.ellipsis-1 {
+  text-overflow: ellipsis;
+  lines: 1;
+}
+.ellipsis-2 {
+  text-overflow: ellipsis;
+  lines: 2;
+}
+.ellipsis-3 {
+  text-overflow: ellipsis;
+  lines: 3;
+}
+.ellipsis-4 {
+  text-overflow: ellipsis;
+  lines: 4;
+}
+.ellipsis-5 {
+  text-overflow: ellipsis;
+  lines: 5;
+}
+.ellipsis-6 {
+  text-overflow: ellipsis;
+  lines: 6;
+}
+.ellipsis-7 {
+  text-overflow: ellipsis;
+  lines: 7;
+}
+.ellipsis-8 {
+  text-overflow: ellipsis;
+  lines: 8;
+}
+.ellipsis-9 {
+  text-overflow: ellipsis;
+  lines: 9;
+}
+.ellipsis-10 {
+  text-overflow: ellipsis;
+  lines: 10;
+}
+.ellipsis-11 {
+  text-overflow: ellipsis;
+  lines: 11;
+}
+.ellipsis-12 {
+  text-overflow: ellipsis;
+  lines: 12;
+}
+.ellipsis-13 {
+  text-overflow: ellipsis;
+  lines: 13;
+}
+/* flex-{1~12} */
+.flex-1 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.flex-2 {
+  -webkit-box-flex: 2;
+  -webkit-flex: 2;
+          flex: 2;
+}
+.flex-3 {
+  -webkit-box-flex: 3;
+  -webkit-flex: 3;
+          flex: 3;
+}
+.flex-4 {
+  -webkit-box-flex: 4;
+  -webkit-flex: 4;
+          flex: 4;
+}
+.flex-5 {
+  -webkit-box-flex: 5;
+  -webkit-flex: 5;
+          flex: 5;
+}
+.flex-6 {
+  -webkit-box-flex: 6;
+  -webkit-flex: 6;
+          flex: 6;
+}
+.flex-7 {
+  -webkit-box-flex: 7;
+  -webkit-flex: 7;
+          flex: 7;
+}
+.flex-8 {
+  -webkit-box-flex: 8;
+  -webkit-flex: 8;
+          flex: 8;
+}
+.flex-9 {
+  -webkit-box-flex: 9;
+  -webkit-flex: 9;
+          flex: 9;
+}
+.flex-10 {
+  -webkit-box-flex: 10;
+  -webkit-flex: 10;
+          flex: 10;
+}
+.flex-11 {
+  -webkit-box-flex: 11;
+  -webkit-flex: 11;
+          flex: 11;
+}
+.flex-12 {
+  -webkit-box-flex: 12;
+  -webkit-flex: 12;
+          flex: 12;
+}
+.flex-13 {
+  -webkit-box-flex: 13;
+  -webkit-flex: 13;
+          flex: 13;
+}
+/* 文字位置*/
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-bold {
+  font-weight: bold;
+}
+.text-decoration {
+  text-decoration: line-through;
+}
+

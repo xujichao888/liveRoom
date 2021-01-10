@@ -1,0 +1,1 @@
+<view class="more-content data-v-184bc24c"><block wx:for="{{arr}}" wx:for-item="item" wx:for-index="index" wx:key="id"><xu-more-btn vue-id="{{'1843867c-1-'+index}}" imageUrl="{{item.url}}" text="{{item.text}}" class="data-v-184bc24c" bind:__l="__l"></xu-more-btn></block></view>

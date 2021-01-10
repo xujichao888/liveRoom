@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "xu-more-btn": "/components/xu-moreBtn/xu-moreBtn"
+  },
+  "component": true
+}

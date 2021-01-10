@@ -1,0 +1,29 @@
+<template>
+	<view class="more-content">
+		<xu-moreBtn v-for="(item,index) in arr" :imageUrl="item.url" :text="item.text" :key="item.id"/>
+	</view>
+</template>
+
+<script>
+	export default {
+		data(){
+			return{
+				arr:[
+					{id:'a1', text:'举报房间',url:'/static/icon/hitRoom.png'},
+					{id:'a2',text:'退出房间',url:'/static/icon/goout.png'}
+				]
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.more-content{
+		width: 750rpx;
+		height:240rpx;
+		background-color:#021526;
+		flex-direction: row;
+		align-items: center;
+		padding-left: 50rpx;
+	}
+</style>

@@ -1,0 +1,36 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	{
+		"path": "pages/test/index",
+		"style": {
+			"navigationBarTitleText": "uni-app",
+			"app-plus":{
+				"titleNView":false
+			}
+		}
+	},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app",
+				"app-plus":{
+					"titleNView":false
+				}
+			}
+		}
+	],
+	"easycom": {//easycom打包后会自动剔除没有使用的组件
+		"autoscan": true,
+		"custom": {
+			"d-(.*)": "@/dnvue-ui/components/d-$1/d-$1",
+			"^xu-(.*)": "@/components/xu-$1/xu-$1.nvue",
+			"^vue-file-(.*)": "packageName/path/to/vue-file-$1.nvue"
+		}
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}

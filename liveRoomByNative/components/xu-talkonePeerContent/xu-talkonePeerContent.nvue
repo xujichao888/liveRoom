@@ -1,0 +1,76 @@
+<template>
+	<view class="talkone-peer-content">
+		<view class="peerList-box" v-if="!talkPageIsShow">
+			<xu-popuptitle text="消息" />
+			<xu-talkonePeerList v-for="(item,index) in talklist" :key="item.time" :renderJson="item" @clickCallback="gotoTalkPage"/>
+		</view>
+		<view class="talk-one-container" v-if="talkPageIsShow">
+			<xu-talkonePage ref='talkPage' :avatar="avatar" :nickName="talkUsernickname" :uid="talkUsernickId" @backList="handleBack" @sendMsg="sendmsg"/>
+		</view>
+	</view>
+</template>
+
+<script>
+	import {
+		ReqWebApi
+	} from '@/static/publicJs/requestFun.js';
+	import {
+		getToken
+	} from '@/static/publicJs/token.js';
+	import {
+		getSystemMsg
+	} from '@/static/publicJs/requestPath.js'
+	export default {
+		data(){
+			return{
+				SystemMsg:[],//系统消息的渲染数组，
+				talkPageIsShow:false,//控制聊天页面显示,
+				talkUsernickname:'',//聊天的用户名
+				talkUsernickId:'',//聊天的uid
+				avatar:'',//自己的头像
+			}
+		},
+		computed:{
+			talklist(){ //获得聊天的最后一条数据 显示在消息列表中
+				return this.$store.state.talkOnePeerRenderArr
+			}
+			
+		},
+		mounted() {
+			this.getSystemMsg()
+		},
+		methods:{ //获得系统消息
+			async getSystemMsg(){
+				let result = await ReqWebApi(getSystemMsg+'?msgid=0&rows=20','GET','',getToken(this),this,'getSystemMsg','',true)
+				//系统消息没有字段
+			},
+			gotoTalkPage(item){ //进入到聊天页面
+				this.talkPageIsShow = true;
+				let {id,nickname,avatar} = item;
+				this.talkUsernickname = nickname
+				this.talkUsernickId = id
+				this.avatar = avatar
+			},
+			handleBack(){
+				this.talkPageIsShow = false
+				this.talkUsernickname = ''
+				this.talkUsernickId = ''
+				this.avatar = ''
+			},
+			sendmsg(item){
+				console.log(456)
+				this.$emit('sendMsg',item)
+			}
+		}
+	}
+</script>
+
+<style>
+	.talkone-peer-content{
+		width: 750rpx;
+		height: 750rpx;
+		background-color: #021526;
+		border-top-left-radius:38rpx;
+		border-top-right-radius:38rpx;
+	}
+</style>

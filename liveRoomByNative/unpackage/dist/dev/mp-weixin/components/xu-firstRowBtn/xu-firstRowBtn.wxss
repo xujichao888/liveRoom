@@ -1,0 +1,29 @@
+
+.first-row-container.data-v-e954d6cc{
+	padding: 5rpx 30rpx;
+	background-color: #062525;
+	border-radius: 60rpx;
+	border-color: #008284;
+	border-width: 4rpx;
+	border-style: solid;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	margin-right: 10rpx;
+}
+.img.data-v-e954d6cc{
+	width:24rpx;
+	margin-right: 5rpx;
+}
+.active.data-v-e954d6cc{
+	background-color: #005b5c;
+	border-color: #005b5c;
+}
+

@@ -1,0 +1,15 @@
+
+.more-content.data-v-184bc24c{
+	width: 750rpx;
+	height:240rpx;
+	background-color:#021526;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	padding-left: 50rpx;
+}
+

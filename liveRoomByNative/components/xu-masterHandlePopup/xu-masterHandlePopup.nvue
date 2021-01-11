@@ -1,5 +1,5 @@
 <template>
-	<view class="marster-handle" :class="{twooption:renderArr.length<3}" style="position: relative;">
+	<view class="marster-handle" :class="{twooption:renderArr.length<3,oneOption:renderArr.length<2}" style="position: relative;">
 		<view class="box">
 			<text class="list"
 			 :class="{listLast:index==renderArr.length-1,firstBlock:index==0}"
@@ -106,10 +106,13 @@
 <style scoped>
 	.marster-handle{
 		width: 750rpx;
-		height: 450rpx;
+		height: 430rpx;
 	}
 	.twooption{
-		height: 350rpx;
+		height: 310rpx;
+	}
+	.oneOption{
+		height: 210rpx;
 	}
 	.box{
 		border-radius: 38rpx;

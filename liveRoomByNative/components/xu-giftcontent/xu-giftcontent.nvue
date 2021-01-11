@@ -21,8 +21,8 @@
 		</view>
 		<view class="gift-swiper-box" style="position: relative;">
 			<swiper  class="gift-swiper" :duration="500" @change="swiperGift">
-				<swiper-item class="gift-item" v-for="a in 2" :key="a">
-					<xu-giftBlock :renderJson="testRender" v-for="i in 8" :key="i"/>
+				<swiper-item class="gift-item" v-for="(item,index) in giftRender" :key="index">
+					<xu-giftBlock :idx='idx' :index="index"  :renderJson="i" v-for="(i,idx) in item" :key="idx" @clickCallBack="selectGift"/>
 				</swiper-item>
 			</swiper>
 			<view class="circle-box">
@@ -32,24 +32,15 @@
 		<view class="bottom-bar">
 			<view class="bottom-bar-left">
 				<image class="zuanshi-img" src="/static/icon/zuanshi.png" mode="widthFix"></image>
-				<text class="has-zuanshi">1000</text>
+				<text class="has-zuanshi">{{Money}}</text>
 				<text class="exchange" @click="popupExchange">兑换</text>
 			</view>
 			<view class="bottom-bar-right">
 				<view class="select-send-num" style="position: relative; " @click="toggle">
-					<view class="show-hide-select" style="position: absolute;" v-if="selectToggle">
-						<text 
-							style="color:'#FFFFFF;margin-bottom: 5rpx;margin-top: 5rpx; width: 110rpx; text-align: center;" 
-							v-for="(item,index) in numArr" 
-							:key="index"
-							@click="changeSelectNum(item)"
-						>{{item}}</text>
-					</view>
 					<text class="select-send-num-text">{{selectNum}}</text>
 					<image class="sanjiao" src="/static/icon/sanjiao.png" mode="widthFix" style="position: absolute; "></image>
 				</view>
-				<image class="send-img" src="/static/icon/sendGift.png" mode="widthFix"></image>
-				
+				<image class="send-img" src="/static/icon/sendGift.png" mode="widthFix" @click.stop="sendGift"></image>
 			</view>
 		</view>
 	
@@ -61,20 +52,20 @@
 		data() {
 			return {
 				isAllmic: false, //是不是全麦
-				testRender:{ //礼物测试渲染数据
-					name:'测试图片',
-					image:'https://7ye-1254317792.cos.ap-beijing.myqcloud.com/050b3f4bfa064eb78c6e961ff21741e6.png',
-					price:50,
-					
-				},
-				selectNum:1, //默认数量
-				numArr:[1,5,520,1314],//礼物的所有数字
 				circleCurror:0, //轮播的焦点
-				selectToggle:false //选择数量显隐
+				selectToggle:false ,//选择数量显隐
+				giftItem:null,
+				
 			}
 		},
 		props: {
-			renderArr: []
+			Money:Number,
+			renderArr:Array,
+			giftRender:{
+				type:Array,
+				default:[]
+			},
+			selectNum:Number
 		},
 		methods: {
 			selectAll() { //全麦
@@ -89,14 +80,23 @@
 				console.log(e)
 				this.circleCurror= e.detail.current
 			},
-			changeSelectNum(item){ 
-				this.selectNum = item;
-			},
 			toggle(){
-				this.selectToggle= !this.selectToggle
+				this.$emit('selectNum')
 			},
 			popupExchange(){
 				this.$emit('popupExchange')
+			},
+			selectGift(item){ //选择礼物
+				//console.log(item)
+				this.giftItem = item;
+				this.$emit('changeGiftActive',item);
+			},
+			sendGift(){ //发送礼物
+				let json ={
+					gift:this.giftItem,
+					num:this.selectNum
+				}
+				this.$emit('sendGiftFromCompo',json)
 			}
 		}
 	}
@@ -168,8 +168,8 @@
 	}
 
 	.img-avatar {
-		width: 57rpx;
-		height: 57rpx;
+		width: 54rpx;
+		height: 54rpx;
 		border-radius: 60rpx;
 	}
 	.selectActive{

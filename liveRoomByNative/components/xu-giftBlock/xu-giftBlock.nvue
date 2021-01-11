@@ -1,6 +1,6 @@
 <template>
-	<view class="gift-block-content">
-		<image class="gift-img" :src="renderJson.image" mode="aspectFill" :class="{giftimgactive:isActive}"></image>
+	<view class="gift-block-content" @click="selectThisBlock">
+		<image class="gift-img" :src="renderJson.image" mode="aspectFill" :class="{giftimgactive:renderJson.isActive}"></image>
 		<text class="gift-name">{{renderJson.name}}</text>
 		<text class="gift-price">{{renderJson.price}}钻</text>
 	</view>
@@ -10,7 +10,17 @@
 	export default {
 		props:{
 			renderJson:Object,
-			isActive:Boolean,
+			idx:Number,
+			index:Number
+		},
+		methods:{
+			selectThisBlock(){
+				let json ={
+					msg:this.renderJson,
+					index:[this.index,this.idx]
+				}
+				this.$emit('clickCallBack',json)
+			}
 		}
 	}
 </script>

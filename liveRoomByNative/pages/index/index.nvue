@@ -108,11 +108,21 @@
 			</view>
 		</d-popup>
 		<!-- 礼物弹出 -->
-		<d-popup direction="bottom" ref="giftPopup">
+		<d-popup direction="bottom" ref="giftPopup" @closeFun = 'resetMsg'>
 			<view>
 				<xu-popuptitle text="礼物" />
-				<xu-giftcontent :renderArr="giftRender" @changeSelectState="changeSelectStateFromChildCompo" @allControl="selectOnePeerAll"
-				 @popupExchange="popupExchange" />
+				<xu-giftcontent 
+					:renderArr="giftPersonRender" 
+					:giftRender ="giftRender"
+					:Money = "Money"
+					:selectNum="giftNum"
+					@changeSelectState="changeSelectStateFromChildCompo" 
+					@allControl="selectOnePeerAll"
+					@popupExchange="popupExchange" 
+					@changeGiftActive ="changeGiftActive"
+					@sendGiftFromCompo = "sendGiftFromCompo"
+					@selectNum = "selectGiftNum"
+				/>
 			</view>
 		</d-popup>
 		<!-- 兑换 -->
@@ -150,6 +160,7 @@
 				/>
 			</view>
 		</d-popup>
+	
 		<!-- 抱人上麦的列表 -->
 		<d-popup direction="bottom" ref="talkOtherUpMic">
 			<view>
@@ -163,6 +174,14 @@
 				/>
 			</view>
 		</d-popup>	
+		<!-- 选择数量 -->
+		<d-popup direction="bottom" ref="giftSelectNum">
+			<view>
+				<xu-popuptitle text="选择数量" />
+				<xu-giftSelectNum :selectNum="giftNum" @changeSelectNum="changeGiftSelectNum"/>
+			</view>
+		</d-popup>
+		<jx-svga style="width: 750rpx; height: 800rpx; position: fixed; top: 100rpx; background-color: #005B5C;" ref="jxSvga" @onSvgaPlayEnd="onSvgaPlayEnd"></jx-svga>
 	</view>
 </template>
 
@@ -237,6 +256,13 @@
 				masterNotCloce:true,//房主是否给我禁麦了，
 				filterAfterArr:[],//过滤后的在线列表
 				onlineListType:'online',//控制onlineList组件点击时弹出信息还是抱人上麦
+				masterTakeOtherSeat:0, // 房主抱人上麦，抱到哪个座位上，完成后需要等于0
+				giftRender:[],//刷礼物列表,
+				Money:0,//货币通过socket获得的
+				giftTemporaryBoolean:true,//延时发送开关
+				giftTemporaryArr:[],//保存礼物id
+				giftNum:1,//送出礼物的基数
+				sendNum:0,//发礼物的数量
 			}
 		},
 		mounted() {
@@ -258,16 +284,23 @@
 			isListText() {
 				return this.likeControl ? '已收藏' : '收藏'
 			},
-			giftRender() { //计算上麦的人
+			giftPersonRender() { //计算上麦的人
 				console.log('我被触发了')
 				let arr = []
-				if (this.masterSeat.id) { //房主是否在麦
+				console.log('看看数据',JSON.stringify(this.masterSeat))
+				console.log(JSON.stringify(this.masterSeat) !="{}")
+				console.log(this.$store.state.userMsg);
+				if(this.$store.state.userMsg == null){
+					return false
+				}
+				console.log('看看数据2',JSON.stringify(this.micSeatJson))
+				if (JSON.stringify(this.masterSeat) !="{}" && this.masterSeat.id &&  this.masterSeat.id!=this.$store.state.userMsg.id) { //房主是否在麦
 					let json = this.masterSeat
 					json.idx = "0"
 					arr.push(this.masterSeat)
 				}
 				for (let key in this.micSeatJson) { //遍历麦
-					if (this.micSeatJson[key].id) {
+					if (this.micSeatJson[key].id &&  this.micSeatJson[key].id!=this.$store.state.userMsg.id) {
 						let json = this.micSeatJson[key]
 						json.idx = key
 						arr.push(json)
@@ -284,14 +317,52 @@
 			console.log('传递的参数', option)
 			this.initOutMsg(option);
 			
-			await this.onloadPromis()
+			
+			this.addRoom() //加入房间前的验证
 			//console.log('未开始', this.masterSeat)
 			// this.test() //测试数据
 		},
 		methods: {
+			changeGiftSelectNum(num){
+				this.giftNum= num
+			},
+			selectGiftNum(){
+				this.$refs.giftSelectNum.open() //打开弹出层
+			},
+			resetMsg(){ //重置select 重置礼物arr isActive
+				this.masterSeat.isSelect = false;
+				for(let key in this.micSeatJson){
+					this.$set(this.micSeatJson[key],'isSelect',false)
+				}
+				this.giftRender.forEach((item,index)=>{
+					item.forEach((i,idx)=>{
+						this.giftRender[index][idx].isActive = false
+					})
+				})
+				this.giftNum=1
+			},
+			//https://xiangwan.oss-cn-beijing.aliyuncs.com/svga/jd/cake.svga
+			onSvgaPlayEnd(){ //svga 结束回调
+				console.log('svga结束')
+			},
+			startAnim() { //播放SVGA动画
+			    console.log('start anim..');
+			    this.$refs.jxSvga.startAnimation({url:"http://www.biggold.net.cn/kingset.svga", loop:1});
+			},
 			sendATE(nickname){ //@别人
 				this.manyTaleValue="@"+nickname;
 				this.$refs.checkUserPopup.close()
+			},
+			changeGiftActive(json){ //改变礼物的选中状态
+				console.log(json)
+				let {msg,index} = json;
+				this.giftRender.forEach((item,indexs)=>{ //设置默认active属性
+					item.forEach((a,idx)=>{
+						this.$set(this.giftRender[indexs][idx],'isActive',false)
+					})
+				})
+				this.$set(this.giftRender[index[0]][index[1]],'isActive',true);
+				console.log(this.giftRender)
 			},
 			gotoGiftPop(id){// 去给别人送礼物,不能给自己送礼物
 				this.$refs.checkUserPopup.close();
@@ -334,6 +405,7 @@
 				}
 				if(items.type == 1){ //抱人上麦
 					console.log('我点了抱人上麦')
+					console.log(item)
 					this.onlineArr = []
 					this.filterAfterArr = [];
 					await this.getOnlineListByWebAPI()
@@ -341,6 +413,7 @@
 					this.onlineListType = 'upmic'
 					this.$refs.talkOtherUpMic.open()
 					this.$refs.masterHandle.close()
+					this.masterTakeOtherSeat = item.seats
 				}
 				if(items.type == 2){ //查看消息
 					console.log('我草无情',id)
@@ -427,10 +500,18 @@
 				console.log('我来自子组件', idx)
 				if (idx == 0) {
 					console.log('选择了房主')
+					if(this.masterSeat.isSelect){
+						this.masterSeat.isSelect=false;
+						return false;
+					}
 					this.selectOnePeerAll(false) //全反
 					this.masterSeat.isSelect = true
 
 				} else {
+					if(this.micSeatJson[idx].isSelect){
+						this.$set(this.micSeatJson[idx], 'isSelect', false)
+						return false;
+					}
 					this.selectOnePeerAll(false) //全反
 					console.log('我选择了上麦人')
 					this.$set(this.micSeatJson[idx], 'isSelect', true)
@@ -459,7 +540,7 @@
 			async onloadPromis() { //加载多条初始化信息
 				let that = this
 				try { //this.getUserInfo(), this.getRTCtoken(),
-					let result = await Promise.all([this.loadRoomInfo(), this.addRoom(), this.getUserInfo(), this
+					let result = await Promise.all([this.loadRoomInfo(), this.getUserInfo(), this
 						.getAwesomePerson(), this.getRtmToken(), this.getRTCtoken()
 					])
 
@@ -776,16 +857,12 @@
 				}
 				console.log(this.micSeatJson)
 			},
-			addRoom() { //加入房间的验证
-				return new Promise(async (resolve, reject) => {
+			async addRoom() { //加入房间的验证
 					let result = await ReqWebApi(addRoom + this.RoomId, 'PUT', {}, getToken(this), this, 'addRoom', '', true);
 					console.log('加入房间是否成功', result)
 					if (result.data.code == 0) {
-						resolve(1)
-					} else {
-						reject(-1)
-					}
-				})
+						await this.onloadPromis()
+					} 
 
 			},
 			getRtmToken() { //获得实时消息的token
@@ -855,12 +932,14 @@
 				console.log('userid', this.$store.state.userTokenMsg.userid)
 				let result = await ReqWebApi(upMicPath, 'POST', {
 					roomid: this.roomInfo.id,
-					userid:id
+					userid:id,
+					seat: this.masterTakeOtherSeat>0?parseInt(this.masterTakeOtherSeat):0
 				}, getToken(this), this, 'upMic', '', true)
 				if (result.data.code == 0) {
 					//这个地方走IM 在麦上通知更新视图
 					console.log(result)
-					if(id == this.$store.state.userMsg.id){
+					this.masterTakeOtherSeat = 0;
+					if(id == 0){
 						rtcModule.doConfigEngine(1)
 						this.upMicTextIsShow = false; //隐藏文字显示图标
 					}else{
@@ -890,14 +969,6 @@
 			async muteVoice() { //关闭麦克风
 				//this.MicIsOn = !this.MicIsOn //muteLocalAudioStream true off false on
 				rtcModule.setEnableSpeakerphone(true);
-
-				// if(this.seat == 0){
-				// 	this.masterSeat.micState = this.MicIsOn?1:2
-				// }else{
-				// 	console.log('我自己的座位',this.seat)
-				// 	console.log(this.micSeatJson[this.seat])
-				// 	this.micSeatJson[this.seat].micState = this.MicIsOn?1:2
-				// }
 				if (this.MicIsOn) {
 					console.log('我关闭了麦克风')
 					let result = await ReqWebApi(prohibitUserMic + this.roomInfo.id + '/' + this.$store.state.userMsg.id + '/' + "1",
@@ -958,7 +1029,155 @@
 				uni.hideKeyboard() //收起键盘
 			},
 			connectWebsocket() { //连接socket
-
+				console.log('我要连websocket');
+				let that = this
+				//绑定用户
+				let bindUserBuf = exchangeToBuf("api.ReqBindUser", {
+					token: getToken(this),
+					json:true
+				}, "api.BindUser", [1, 0])
+				// 创建一个this.socketTask对象【发送、接收、关闭socket都由这个对象操作】
+				this.socketTask = uni.connectSocket({
+					// 【非常重要】必须确保你的服务器是成功的,如果是手机测试千万别使用ws://127.0.0.1:9099【特别容易犯的错误】	
+					url: "wss://hitalk-api.jixiangonline.com/ws",
+					success(data) {
+						console.log("websocket连接成功");
+					},
+				});
+				this.socketTask.onOpen((res) => {
+					console.log("WebSocket连接正常打开中...！");
+					this.AreadyConnectSocket = true;
+					this.socketTask.send({
+						data: bindUserBuf,
+						async success() {
+							console.log("消息发送成功");
+						},
+					});
+					this.socketTask.onMessage((res) => {
+						console.log("收到服务器内容：" +res.data);
+						let result = JSON.parse(res.data)
+						let {BufID} = result;
+						if(BufID == 1){//第一次连接
+							let {Body} = result;
+							let {giftlist,Money} = Body
+							console.log('礼物列表',giftlist) //this.giftRender
+							this.Money = Money
+							if(giftlist.length>8){ //大于1页
+								for(let i=0;i<giftlist.length;i+=8){
+								    this.giftRender.push(giftlist.slice(i,i+8));
+								}
+							}else{ //只有1页
+								this.giftRender.push(...giftlist);
+							}
+							this.giftRender.forEach((item,index)=>{ //设置默认active属性
+								item.forEach((a,idx)=>{
+									this.$set(this.giftRender[index][idx],'isActive',false)
+								})
+							})
+						}else{//刷礼物连接
+							this.startAnim()
+						}
+					});
+				})
+			},
+			sendGiftFromCompo(json){ //发送礼物
+				//验证有没有选择人
+				 if(!this.masterSeat.isSelect && this.forEachMic()==-1){
+					 uni.showToast({
+					 	title:'请选择要送礼物的人',
+						icon:'none'
+					 })
+					 return false
+				 }
+				 //验证有没有选择礼物
+				 if(this.forEachGiftState()==-1){
+					 uni.showToast({
+					 	title:'请选择要送的礼物',
+					 	icon:'none'
+					 })
+					 return false
+				 }
+				 //发礼物
+				 let ownId = this.$store.state.userMsg.id //自己的id
+				 let roomid = this.roomInfo.id; //房间的id
+				 let sn = ownId+'y'+ new Date().getTime() 
+				 let giftList = []
+				 let userIdList = [];
+				 console.log('我走到这了吗')
+				 let {gift,num} = json;
+				 let {giftid} = gift.msg;
+					//写到这里了
+				 if(this.masterSeat.isSelect && this.masterSeat.id !=ownId){
+					userIdList.push(this.masterSeat.id) 
+				 }
+				 for(let key in this.micSeatJson){ //每次点击监听人有没有
+				 	if(this.micSeatJson[key].isSelect && this.micSeatJson[key].id !=ownId){
+				 		userIdList.push(this.micSeatJson[key].id)
+				 	}
+				 }
+				 console.log(userIdList);
+				 if(this.giftTemporaryBoolean){ //将发送的礼物推入到数组中
+					 console.log('我执行了')
+					 this.giftTemporaryBoolean = false;
+					 this.sendNum++
+					 setTimeout(()=>{
+						 //调用socket发送
+						  console.log('我是这两秒的结果',this.sendNum);
+						  console.log(Number(roomid))
+						  console.log(userIdList)
+						  let jsons ={}
+						  jsons[giftid] = this.sendNum;
+						  console.log(jsons)
+						  let sendGift = exchangeToBuf("api.ReqSendGift", {
+						  	sn,
+						  	roomid: Number(roomid),
+						  	userids: userIdList,
+						  	gift: jsons,
+							json:true
+						  }, "api.SendGift", [2, 0])
+						  this.sendGiftBySocket(sendGift);
+						  this.giftTemporaryArr=[]
+						  this.sendNum=0
+						  console.log('我被情空了')
+						 this.giftTemporaryBoolean=true
+					 },2000)
+				 }else{
+					 //追加临时的变量
+					this.sendNum++
+				 }
+				 
+			
+				
+			},
+			sendGiftBySocket(datas) { //socket 发礼物
+				let that = this
+				if (this.AreadyConnectSocket) {
+					// websocket的服务器的原理是:发送一次消息,同时返回一组数据【否则服务器会进去死循环崩溃】
+					this.socketTask.send({
+						data: datas,
+						async success() {
+							console.log("消息发送成功");
+						},
+					});
+				}
+			},
+			forEachMic(){ // 验证是不是没有选择送礼物的人
+				for(let key in this.micSeatJson){
+					if(this.micSeatJson[key].isSelect){
+						return this.micSeatJson[key]
+					}
+				}
+				return -1
+			},
+			forEachGiftState(){ //验证礼物有没有被选中
+				for(let a=0;a<this.giftRender.length;a++){
+					for(let i=0;i<this.giftRender[a].length;i++){
+						if(this.giftRender[a][i].isActive){
+							return a
+						}
+					}
+				}
+				return -1
 			},
 			sendMsg(json) { //发送单聊消息
 				let {
@@ -976,6 +1195,7 @@
 			},
 			popupOnline() { //打开在线列表
 				this.onlineArr = [];
+				this.onlineListType = 'online'
 				this.getOnlineListByWebAPI('online') //数据不对
 				this.$refs.onlinePersonPopup.open()
 			},

@@ -24,6 +24,10 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           token: {
             type: "string",
             id: 1
+          },
+          json: {
+            type: "bool",
+            id: 2
           }
         }
       },
@@ -103,6 +107,10 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
             keyType: "string",
             type: "int32",
             id: 4
+          },
+          json: {
+            type: "bool",
+            id: 5
           }
         }
       },

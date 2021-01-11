@@ -70,8 +70,14 @@
 			}else{ //点了没有人的座位 判断锁没锁    1。锁麦或取消锁麦 ,2.取消禁言 3.取消
 				console.log('没有人')
 				console.log(this.handleJson)
-				this.renderArr.push(this.allTextArr[1])
-				this.renderArr.push(this.allTextArr[5])
+				let {islock} = this.handleJson;
+				if(islock){
+					this.renderArr.push(this.allTextArr[6])
+				}else{
+					this.renderArr.push(this.allTextArr[1])
+					this.renderArr.push(this.allTextArr[5])
+				}
+				
 			}
 
 			

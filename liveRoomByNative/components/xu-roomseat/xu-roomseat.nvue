@@ -1,7 +1,7 @@
 <template>
 	<view class="box" style="position: relative;" @click="handleClick">
 		<image v-if="renderJson.avatar" class="avatar"  :src="renderJson.avatar" mode="aspectFill"></image>
-		<text class="seat-num" style="position: absolute;">{{idx}}</text>
+		<text v-if="!renderJson.islock" class="seat-num" style="position: absolute;">{{idx}}</text>
 		<image v-if="!renderJson.avatar" class="kongwei" src="/static/icon/kongwei.png" mode="widthFix"></image>
 		<text v-if="!renderJson.id && isMaster" class="master-text">房主</text>
 		<text v-if="renderJson.nickname" class="master-text">{{renderJson.nickname}}</text>
@@ -14,6 +14,7 @@
 			<image class="mic-icon" v-if="renderJson.micState===2" src="/static/icon/closeMic.png" mode="widthFix"></image>
 			<image class="mic-icon" v-if="renderJson.micState===1" src="/static/icon/openMic.png" mode="widthFix"></image>
 		</view>
+		<image v-if="renderJson.islock" style="position: absolute; left:50%;  top: 50%; width: 35rpx; height: 47rpx;margin-top: 23.5rpx;" src="/static/icon/lock.png" mode="widthFix"></image>
 	</view>
 </template>
 
@@ -33,7 +34,8 @@
 					avatar:'',
 					nickname:'',
 					income:0,
-					micState:1
+					micState:1,
+					islock:false
 				}
 			},
 			seat:String
@@ -117,5 +119,8 @@
 		height: 110rpx;
 		text-align: center;
 		line-height: 110rpx;
+	}
+	.lockclass{
+		width: 80rpx;
 	}
 </style>

@@ -316,7 +316,8 @@
 							this.temporaryMasterClickJson = json
 						}else{//麦上没有人
 							this.$refs.masterHandle.open()
-							this.temporaryMasterClickJson = {seat}
+							let {islock} = jsons
+							this.temporaryMasterClickJson = {seat,islock}
 						}
 					}
 				}
@@ -361,6 +362,16 @@
 					console.log(seat)
 					seat-=seats;
 					this.changeRoomMsgForLockSeat(seat)
+					this.$refs.masterHandle.close()
+				}
+				if(items.type == 6){
+					let {seats} = item;
+					let {seat} = this.roomInfo;
+					console.log()
+					seat+=parseInt(seats);
+					console.log(seat)
+					this.changeRoomMsgForLockSeat(seat)
+					this.$refs.masterHandle.close()
 				}
 			},
 			async changeRoomMsgForLockSeat(seat){ //改变房间的信息去锁座位
@@ -527,6 +538,13 @@
 							_this.$store.state.manyTalkRenderArr.push(textjson)
 							console.log('群聊渲染数组', _this.$store.state.manyTalkRenderArr)
 						}
+						if(Type=="RoomInfoUpdate"){
+							let {
+								Msg
+							} = textjson;
+							this.roomInfo.seat = Msg.seat
+							this.seatIsLockFun() //被锁的座位
+						}
 						if (Type == 'AnchorUpdate') {
 							console.log('上麦信息更新了')
 							console.log(textjson)
@@ -544,6 +562,7 @@
 								"64": {},
 								"128": {}
 							})
+							this.seatIsLockFun() //被锁的座位
 							for (let key in Msg) {
 								if (key == '0') {
 									let json = JSON.parse(Msg[key])
@@ -712,7 +731,7 @@
 						if (this.roomInfo.iscollect) { //判断用户是否收藏房间
 							this.likeControl = true
 						}
-						this.seatIsLockFun()
+						this.seatIsLockFun() //查看被锁的位置
 						console.log('房间信息', this.roomInfo)
 						if (this.roomInfo.anchor) { //进入房间初始化已经在麦上的数据后续的是靠IM实现的渲染
 							for (let key in this.roomInfo.anchor) {
@@ -751,6 +770,8 @@
 				for(let key in this.micSeatJson){
 					if((this.roomInfo.seat&key)==0){
 						this.$set(this.micSeatJson[key],"islock",true)
+					}else{
+						this.$set(this.micSeatJson[key],"islock",false)
 					}
 				}
 				console.log(this.micSeatJson)

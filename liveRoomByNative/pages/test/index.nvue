@@ -17,12 +17,12 @@
 		methods:{
 			user1Nav(){
 				uni.navigateTo({
-					url:"/pages/index/index?msg=e06cbf6ab2143e323492cb0ce349df41892a88cf3fdc03dd6335cbdce64dbcca5"
+					url:"/pages/index/index?msg=029e4e47b8584a3998bb84fd85097639c38c7c9ebf8c85a9ed2b957c0c04d8735"
 				})
 			},
 			user2Nav(){
 				uni.navigateTo({
-					url:"/pages/index/index?msg=fc43907c706b6c239796bd45ff2336bbafc30f1a8bc34bd953986e2bba912b0c5"
+					url:"/pages/index/index?msg=40641a6d5a191d0820c041c52473fe6693633e4b4fa960338e856d2b31545b645"
 				})
 			}
 			

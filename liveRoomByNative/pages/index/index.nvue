@@ -31,7 +31,7 @@
 				<text class="sort-btn-text">排行榜</text>
 			</view>
 			<!-- 房主的座位 -->
-			<xu-roomseat :isMaster="true" :renderJson="masterSeat" @handleClick="handlecheckOptions" seat="0"/>
+			<xu-roomseat :isMaster="true" :renderJson="masterSeat" @handleClick="handlecheckOptions" seat="0" />
 
 		</view>
 		<!-- 其他上麦的座位 -->
@@ -44,12 +44,8 @@
 		<view class="bottom-bar">
 
 			<!-- 开关声音 -->
-			<xu-bottombarCircle 
-				iconUrl="/static/icon/unmute.png" 
-				toggleImgUrl="/static/icon/mute.png"
-				:toggleBoolean="toggleBoolean"
-				@bottomCircleIconCallBack="bottomCircleIconCallBack"
-				/>
+			<xu-bottombarCircle iconUrl="/static/icon/unmute.png" toggleImgUrl="/static/icon/mute.png" :toggleBoolean="toggleBoolean"
+			 @bottomCircleIconCallBack="bottomCircleIconCallBack" />
 			<!-- 群聊输入框 -->
 			<view class="manyTalk">
 				<view class="manyPeerTalk-icon-box">
@@ -79,13 +75,8 @@
 		<d-popup direction="bottom" ref="onlinePersonPopup" @closeFun="closeOnline">
 			<view>
 				<xu-popuptitle text="在线列表" />
-				<xu-onlineList 
-					:onlineArr="onlineArr" 
-					:onlineOffset="onlineOffset" 
-					@loadMoreOnline="getOnlineListByWebAPI" 
-					@popupCheckUser="checksOnlineUser"
-					:onlineType ="onlineListType"
-				/>
+				<xu-onlineList :onlineArr="onlineArr" :onlineOffset="onlineOffset" @loadMoreOnline="getOnlineListByWebAPI"
+				 @popupCheckUser="checksOnlineUser" :onlineType="onlineListType" />
 			</view>
 		</d-popup>
 		<!-- 三个点的弹出 -->
@@ -108,21 +99,12 @@
 			</view>
 		</d-popup>
 		<!-- 礼物弹出 -->
-		<d-popup direction="bottom" ref="giftPopup" @closeFun = 'resetMsg'>
+		<d-popup direction="bottom" ref="giftPopup" @closeFun='resetMsg'>
 			<view>
 				<xu-popuptitle text="礼物" />
-				<xu-giftcontent 
-					:renderArr="giftPersonRender" 
-					:giftRender ="giftRender"
-					:Money = "Money"
-					:selectNum="giftNum"
-					@changeSelectState="changeSelectStateFromChildCompo" 
-					@allControl="selectOnePeerAll"
-					@popupExchange="popupExchange" 
-					@changeGiftActive ="changeGiftActive"
-					@sendGiftFromCompo = "sendGiftFromCompo"
-					@selectNum = "selectGiftNum"
-				/>
+				<xu-giftcontent :renderArr="giftPersonRender" :giftRender="giftRender" :Money="Money" :selectNum="giftNum"
+				 @changeSelectState="changeSelectStateFromChildCompo" @allControl="selectOnePeerAll" @popupExchange="popupExchange"
+				 @changeGiftActive="changeGiftActive" @sendGiftFromCompo="sendGiftFromCompo" @selectNum="selectGiftNum" />
 			</view>
 		</d-popup>
 		<!-- 兑换 -->
@@ -135,53 +117,40 @@
 		<!-- 用户消息 -->
 		<d-popup direction="bottom" ref="checkUserPopup">
 			<view>
-				<xu-checkUser :renderJson="checkUserJson" @sendATE="sendATE" @gotoGiftPop="gotoGiftPop"/>
+				<xu-checkUser :renderJson="checkUserJson" @sendATE="sendATE" @gotoGiftPop="gotoGiftPop" />
 			</view>
 		</d-popup>
 		<!-- 下麦按钮，锁麦，取消弹出 -->
 		<d-popup direction="bottom" ref="selectPopups">
 			<view>
-				<xu-micSelectOptions 
-					@cancel="cancelSelect" 
-					@downMic="downMic($store.state.userMsg.id)" 
-					@muteVoice="muteVoice" 
-					:micIsOff="MicIsOn" 
-					:masterNotCloce="masterNotCloce"
-					/>
+				<xu-micSelectOptions @cancel="cancelSelect" @downMic="downMic($store.state.userMsg.id)" @muteVoice="muteVoice"
+				 :micIsOff="MicIsOn" :masterNotCloce="masterNotCloce" />
 			</view>
 		</d-popup>
 		<!-- 房主权限 -->
 		<d-popup direction="bottom" ref="masterHandle">
 			<view>
-				<xu-masterHandlePopup 
-					:handleJson="temporaryMasterClickJson" 
-					@handleMasterOptions="handleMasterOptions"
-					@cancel = "handleMasterCancel"
-				/>
+				<xu-masterHandlePopup :handleJson="temporaryMasterClickJson" @handleMasterOptions="handleMasterOptions" @cancel="handleMasterCancel" />
 			</view>
 		</d-popup>
-	
+
 		<!-- 抱人上麦的列表 -->
 		<d-popup direction="bottom" ref="talkOtherUpMic">
 			<view>
 				<xu-popuptitle text="抱TA上麦" />
-				<xu-onlineList 
-					:onlineArr="filterAfterArr" 
-					:onlineOffset="onlineOffset" 
-					@loadMoreOnline="getOnlineListByWebAPI"
-					:onlineType ="onlineListType"
-					@upOtherMic ="upOtherMic"
-				/>
+				<xu-onlineList :onlineArr="filterAfterArr" :onlineOffset="onlineOffset" @loadMoreOnline="getOnlineListByWebAPI"
+				 :onlineType="onlineListType" @upOtherMic="upOtherMic" />
 			</view>
-		</d-popup>	
+		</d-popup>
 		<!-- 选择数量 -->
 		<d-popup direction="bottom" ref="giftSelectNum">
 			<view>
 				<xu-popuptitle text="选择数量" />
-				<xu-giftSelectNum :selectNum="giftNum" @changeSelectNum="changeGiftSelectNum"/>
+				<xu-giftSelectNum :selectNum="giftNum" @changeSelectNum="changeGiftSelectNum" />
 			</view>
 		</d-popup>
-		<jx-svga style="width: 750rpx; height: 800rpx; position: fixed; top: 100rpx; background-color: #005B5C;" ref="jxSvga" @onSvgaPlayEnd="onSvgaPlayEnd"></jx-svga>
+		<jx-svga v-if="giftRenderArr.length>0" style="width: 750rpx; height: 800rpx; position: fixed; top: 200rpx;"
+		 ref="jxSvga" @onSvgaPlayEnd="onSvgaPlayEnd"></jx-svga>
 	</view>
 </template>
 
@@ -251,18 +220,19 @@
 				upMicTextIsShow: true, //上麦的文字
 				MicIsOn: true, //是否关闭麦克风 true 为开启  false 为关闭
 				seat: -1, //我自己的座位号,
-				toggleBoolean:true,//切换远端流是否静音
-				temporaryMasterClickJson:{},//房主麦后临时存储
-				masterNotCloce:true,//房主是否给我禁麦了，
-				filterAfterArr:[],//过滤后的在线列表
-				onlineListType:'online',//控制onlineList组件点击时弹出信息还是抱人上麦
-				masterTakeOtherSeat:0, // 房主抱人上麦，抱到哪个座位上，完成后需要等于0
-				giftRender:[],//刷礼物列表,
-				Money:0,//货币通过socket获得的
-				giftTemporaryBoolean:true,//延时发送开关
-				giftTemporaryArr:[],//保存礼物id
-				giftNum:1,//送出礼物的基数
-				sendNum:0,//发礼物的数量
+				toggleBoolean: true, //切换远端流是否静音
+				temporaryMasterClickJson: {}, //房主麦后临时存储
+				masterNotCloce: true, //房主是否给我禁麦了，
+				filterAfterArr: [], //过滤后的在线列表
+				onlineListType: 'online', //控制onlineList组件点击时弹出信息还是抱人上麦
+				masterTakeOtherSeat: 0, // 房主抱人上麦，抱到哪个座位上，完成后需要等于0
+				giftRender: [], //刷礼物列表,
+				Money: 0, //货币通过socket获得的
+				giftTemporaryBoolean: true, //延时发送开关
+				giftTemporaryArr: [], //保存礼物id
+				giftNum: 1, //送出礼物的基数
+				sendNum: 0, //发礼物的数量
+				giftRenderArr: [], //SVGA渲染数组
 			}
 		},
 		mounted() {
@@ -287,20 +257,21 @@
 			giftPersonRender() { //计算上麦的人
 				console.log('我被触发了')
 				let arr = []
-				console.log('看看数据',JSON.stringify(this.masterSeat))
-				console.log(JSON.stringify(this.masterSeat) !="{}")
+				console.log('看看数据', JSON.stringify(this.masterSeat))
+				console.log(JSON.stringify(this.masterSeat) != "{}")
 				console.log(this.$store.state.userMsg);
-				if(this.$store.state.userMsg == null){
+				if (this.$store.state.userMsg == null) {
 					return false
 				}
-				console.log('看看数据2',JSON.stringify(this.micSeatJson))
-				if (JSON.stringify(this.masterSeat) !="{}" && this.masterSeat.id &&  this.masterSeat.id!=this.$store.state.userMsg.id) { //房主是否在麦
+				console.log('看看数据2', JSON.stringify(this.micSeatJson))
+				if (JSON.stringify(this.masterSeat) != "{}" && this.masterSeat.id && this.masterSeat.id != this.$store.state.userMsg
+					.id) { //房主是否在麦
 					let json = this.masterSeat
 					json.idx = "0"
 					arr.push(this.masterSeat)
 				}
 				for (let key in this.micSeatJson) { //遍历麦
-					if (this.micSeatJson[key].id &&  this.micSeatJson[key].id!=this.$store.state.userMsg.id) {
+					if (this.micSeatJson[key].id && this.micSeatJson[key].id != this.$store.state.userMsg.id) {
 						let json = this.micSeatJson[key]
 						json.idx = key
 						arr.push(json)
@@ -316,94 +287,102 @@
 			let option = op.msg;
 			console.log('传递的参数', option)
 			this.initOutMsg(option);
-			
-			
+
+
 			this.addRoom() //加入房间前的验证
 			//console.log('未开始', this.masterSeat)
 			// this.test() //测试数据
 		},
 		methods: {
-			changeGiftSelectNum(num){
-				this.giftNum= num
+			changeGiftSelectNum(num) {
+				this.$refs.giftSelectNum.close()
+				this.giftNum = num
 			},
-			selectGiftNum(){
+			selectGiftNum() {
 				this.$refs.giftSelectNum.open() //打开弹出层
 			},
-			resetMsg(){ //重置select 重置礼物arr isActive
+			resetMsg() { //重置select 重置礼物arr isActive
 				this.masterSeat.isSelect = false;
-				for(let key in this.micSeatJson){
-					this.$set(this.micSeatJson[key],'isSelect',false)
+				for (let key in this.micSeatJson) {
+					this.$set(this.micSeatJson[key], 'isSelect', false)
 				}
-				this.giftRender.forEach((item,index)=>{
-					item.forEach((i,idx)=>{
+				this.giftRender.forEach((item, index) => {
+					item.forEach((i, idx) => {
 						this.giftRender[index][idx].isActive = false
 					})
 				})
-				this.giftNum=1
+				this.giftNum = 1
 			},
-			//https://xiangwan.oss-cn-beijing.aliyuncs.com/svga/jd/cake.svga
-			onSvgaPlayEnd(){ //svga 结束回调
-				console.log('svga结束')
-			},
-			startAnim() { //播放SVGA动画
-			    console.log('start anim..');
-			    this.$refs.jxSvga.startAnimation({url:"http://www.biggold.net.cn/kingset.svga", loop:1});
-			},
-			sendATE(nickname){ //@别人
-				this.manyTaleValue="@"+nickname;
+
+			sendATE(nickname) { //@别人
+				this.manyTaleValue = "@" + nickname;
 				this.$refs.checkUserPopup.close()
 			},
-			changeGiftActive(json){ //改变礼物的选中状态
+			changeGiftActive(json) { //改变礼物的选中状态
 				console.log(json)
-				let {msg,index} = json;
-				this.giftRender.forEach((item,indexs)=>{ //设置默认active属性
-					item.forEach((a,idx)=>{
-						this.$set(this.giftRender[indexs][idx],'isActive',false)
+				let {
+					msg,
+					index
+				} = json;
+				this.giftRender.forEach((item, indexs) => { //设置默认active属性
+					item.forEach((a, idx) => {
+						this.$set(this.giftRender[indexs][idx], 'isActive', false)
 					})
 				})
-				this.$set(this.giftRender[index[0]][index[1]],'isActive',true);
+				this.$set(this.giftRender[index[0]][index[1]], 'isActive', true);
 				console.log(this.giftRender)
 			},
-			gotoGiftPop(id){// 去给别人送礼物,不能给自己送礼物
+			gotoGiftPop(id) { // 去给别人送礼物,不能给自己送礼物
 				this.$refs.checkUserPopup.close();
-				if(id == this.$store.state.userMsg.id){
+				if (id == this.$store.state.userMsg.id) {
 					uni.showToast({
-						title:'你不能送给自己礼物',
-						icon:'none'
+						title: '你不能送给自己礼物',
+						icon: 'none'
 					})
 					return false
 				}
 				//这里需要弹出礼物层没写完！！！！！！！
 			},
-			handlecheckOptions(json){ //点击了在麦上座位包括房主
-				let {jsons,seat} = json;
-				if(this.roomInfo.master == this.$store.state.userMsg.id){
+			handlecheckOptions(json) { //点击了在麦上座位包括房主
+				let {
+					jsons,
+					seat
+				} = json;
+				if (this.roomInfo.master == this.$store.state.userMsg.id) {
 					console.log('我是房主我开始表演了')
 					console.log(jsons)
 					console.log(seat)
-					if(seat !="0"){ //点了除房主外的座位
-						if(jsons.id){ //这说明麦上有人
+					if (seat != "0") { //点了除房主外的座位
+						if (jsons.id) { //这说明麦上有人
 							this.$refs.masterHandle.open()
 							this.temporaryMasterClickJson = json
-						}else{//麦上没有人
+						} else { //麦上没有人
 							this.$refs.masterHandle.open()
-							let {islock} = jsons
-							this.temporaryMasterClickJson = {seat,islock}
+							let {
+								islock
+							} = jsons
+							this.temporaryMasterClickJson = {
+								seat,
+								islock
+							}
 						}
 					}
 				}
 			},
-			checksOnlineUser(id){ //在线列表查看他人信息
+			checksOnlineUser(id) { //在线列表查看他人信息
 				this.$refs.onlinePersonPopup.close()
 				this.checkOtherUser(id)
 			},
-			async handleMasterOptions(item){ //房主权限点击
+			async handleMasterOptions(item) { //房主权限点击
 				console.log(item)
-				let {items,id} = item;
-				if(items.type == 0){//抱人下麦
+				let {
+					items,
+					id
+				} = item;
+				if (items.type == 0) { //抱人下麦
 					this.downMic(id)
 				}
-				if(items.type == 1){ //抱人上麦
+				if (items.type == 1) { //抱人上麦
 					console.log('我点了抱人上麦')
 					console.log(item)
 					this.onlineArr = []
@@ -415,82 +394,103 @@
 					this.$refs.masterHandle.close()
 					this.masterTakeOtherSeat = item.seats
 				}
-				if(items.type == 2){ //查看消息
-					console.log('我草无情',id)
+				if (items.type == 2) { //查看消息
+					console.log('我草无情', id)
 					this.checkOtherUser(id)
 					this.$refs.masterHandle.close()
 				}
-				if(items.type == 3){ //禁言
+				if (items.type == 3) { //禁言
 					this.muteOtherVoice(id);
 					this.$refs.masterHandle.close()
 				}
-				if(items.type == 4){ //解禁
+				if (items.type == 4) { //解禁
 					this.unmuteOtherVoice(id);
 					this.$refs.masterHandle.close()
 				}
-				if(items.type == 5){//锁麦
-					let {seats} = item;
-					let {seat} = this.roomInfo;
+				if (items.type == 5) { //锁麦
+					let {
+						seats
+					} = item;
+					let {
+						seat
+					} = this.roomInfo;
 					console.log()
 					console.log(seat)
-					seat-=seats;
+					seat -= seats;
 					this.changeRoomMsgForLockSeat(seat)
 					this.$refs.masterHandle.close()
 				}
-				if(items.type == 6){
-					let {seats} = item;
-					let {seat} = this.roomInfo;
+				if (items.type == 6) {
+					let {
+						seats
+					} = item;
+					let {
+						seat
+					} = this.roomInfo;
 					console.log()
-					seat+=parseInt(seats);
+					seat += parseInt(seats);
 					console.log(seat)
 					this.changeRoomMsgForLockSeat(seat)
 					this.$refs.masterHandle.close()
 				}
 			},
-			async changeRoomMsgForLockSeat(seat){ //改变房间的信息去锁座位
-				let {name,attr,tags,notice,cover} = this.roomInfo;
-				
-				let result = await ReqWebApi(updataRoomInfo + this.roomInfo.id,'PUT', {
-					name,attr,tags,notice,cover,seat
+			async changeRoomMsgForLockSeat(seat) { //改变房间的信息去锁座位
+				let {
+					name,
+					attr,
+					tags,
+					notice,
+					cover
+				} = this.roomInfo;
+
+				let result = await ReqWebApi(updataRoomInfo + this.roomInfo.id, 'PUT', {
+					name,
+					attr,
+					tags,
+					notice,
+					cover,
+					seat
 				}, getToken(this), this, 'changeRoomMsgForLockSeat', seat, true);
 				console.log(result)
-				if(result.data.code == 0){
-					
+				if (result.data.code == 0) {
+
 				}
 			},
-			upOtherMic(id){ //抱人上麦
+			upOtherMic(id) { //抱人上麦
 				this.$refs.talkOtherUpMic.close()
 				this.upMic(id)
 			},
-			filterNotUpmic(){ //过滤掉已经上麦的人，筛选出没有上麦的人
+			filterNotUpmic() { //过滤掉已经上麦的人，筛选出没有上麦的人
 				//this.filterAfterArr
-				this.onlineArr.forEach(item=>{
-					if(item.id != this.roomInfo.master){
-						if(this.filtersNo(item)==-1){
+				this.onlineArr.forEach(item => {
+					if (item.id != this.roomInfo.master) {
+						if (this.filtersNo(item) == -1) {
 							this.filterAfterArr.push(item)
 						}
 					}
 				})
 				console.log(this.filterAfterArr)
 			},
-			filtersNo(item){ //过滤
-				let {id} = item;
-				for(let key in this.micSeatJson){
-					if(this.micSeatJson[key].id == id){
+			filtersNo(item) { //过滤
+				let {
+					id
+				} = item;
+				for (let key in this.micSeatJson) {
+					if (this.micSeatJson[key].id == id) {
 						return 1
 					}
 				}
 				return -1
 			},
-			async muteOtherVoice(id){ //给他人禁言
+			async muteOtherVoice(id) { //给他人禁言
 				let result = await ReqWebApi(prohibitUserMic + this.roomInfo.id + '/' + id + '/' + "1",
-				'PUT', {}, getToken(this), this, 'muteVoice', '', true);
+					'PUT', {}, getToken(this), this, 'muteVoice', '', true);
 			},
-			async unmuteOtherVoice(id){//给他人解禁
+			async unmuteOtherVoice(id) { //给他人解禁
 				let result = await ReqWebApi(prohibitUserMic + this.roomInfo.id + '/' + id + '/' + "0",
-				'PUT', {}, getToken(this), this, 'muteVoice', '', true);
+					'PUT', {}, getToken(this), this, 'muteVoice', '', true);
 			},
-			handleMasterCancel(){//房主权限取消
+			handleMasterCancel() { //房主权限取消
 				this.$refs.masterHandle.close()
 			},
 			hideKeyboards() {
@@ -500,15 +500,15 @@
 				console.log('我来自子组件', idx)
 				if (idx == 0) {
 					console.log('选择了房主')
-					if(this.masterSeat.isSelect){
-						this.masterSeat.isSelect=false;
+					if (this.masterSeat.isSelect) {
+						this.masterSeat.isSelect = false;
 						return false;
 					}
 					this.selectOnePeerAll(false) //全反
 					this.masterSeat.isSelect = true
 
 				} else {
-					if(this.micSeatJson[idx].isSelect){
+					if (this.micSeatJson[idx].isSelect) {
 						this.$set(this.micSeatJson[idx], 'isSelect', false)
 						return false;
 					}
@@ -551,11 +551,11 @@
 					await refreshToken(this, 'onloadPromis')
 				}
 			},
-			bottomCircleIconCallBack(){//切换远端流是否静音
-				if(this.toggleBoolean){
+			bottomCircleIconCallBack() { //切换远端流是否静音
+				if (this.toggleBoolean) {
 					this.toggleBoolean = false
 					rtcModule.muteAllRemoteAudioStream(!this.toggleBoolean)
-				}else{
+				} else {
 					this.toggleBoolean = true
 					rtcModule.muteAllRemoteAudioStream(!this.toggleBoolean)
 				}
@@ -615,11 +615,32 @@
 						let {
 							Type
 						} = textjson
-						if (Type == 'userTalk') {
+						if (Type == 'userTalk') { //群聊
 							_this.$store.state.manyTalkRenderArr.push(textjson)
 							console.log('群聊渲染数组', _this.$store.state.manyTalkRenderArr)
 						}
-						if(Type=="RoomInfoUpdate"){
+						if (Type == 'SendGift') { //送礼物
+							let {
+								Msg
+							} = textjson;
+							console.log(Msg)
+							let {
+								senduser,
+								gift
+							} = Msg;
+							senduser = JSON.parse(senduser)
+							if (senduser.id == this.$store.state.userMsg.id) {
+								console.log('我自己发的我已经播放完了')
+							} else {
+								if (this.giftRenderArr.length > 0) {
+									this.giftRenderArr.push(gift[0].svga)
+								} else {
+									this.giftRenderArr.push(gift[0].svga)
+									this.startAnim()
+								}
+							}
+						}
+						if (Type == "RoomInfoUpdate") { //房间座位的筛选
 							let {
 								Msg
 							} = textjson;
@@ -671,7 +692,7 @@
 										json.micState = 2;
 										if (json.id == this.$store.state.userMsg.id) {
 											this.MicIsOn = false;
-											if(json.voice == 1){
+											if (json.voice == 1) {
 												this.masterNotCloce = false;
 											}
 											rtcModule.doConfigEngine(1)
@@ -706,12 +727,12 @@
 							}
 							//判断自己还在不在麦上了，
 							let result = this.forEachHasMe(Msg);
-							if(result == -1){
+							if (result == -1) {
 								console.log('我被踢了')
-								this.seat=-1;
+								this.seat = -1;
 								this.MicIsOn = true;
-								this.upMicTextIsShow=true;
-								rtcModule.doConfigEngine(2);//改变为观众
+								this.upMicTextIsShow = true;
+								rtcModule.doConfigEngine(2); //改变为观众
 							}
 						}
 
@@ -743,11 +764,11 @@
 
 				})
 			},
-			forEachHasMe(Msg){
-				for(let key in Msg){
+			forEachHasMe(Msg) {
+				for (let key in Msg) {
 					let item = JSON.parse(Msg[key])
-					if(item!=0){
-						if(item.id == this.$store.state.userMsg.id ){
+					if (item != 0) {
+						if (item.id == this.$store.state.userMsg.id) {
 							return 1
 						}
 					}
@@ -826,7 +847,7 @@
 									this.masterSeat = json
 
 								} else { //一堆麦的数据
-									
+
 									let json = JSON.parse(this.roomInfo.anchor[key])
 									if (json.voice) {
 										json.micState = 2;
@@ -847,22 +868,22 @@
 					}
 				})
 			},
-			seatIsLockFun(){ //判断座位锁了还是没锁
-				for(let key in this.micSeatJson){
-					if((this.roomInfo.seat&key)==0){
-						this.$set(this.micSeatJson[key],"islock",true)
-					}else{
-						this.$set(this.micSeatJson[key],"islock",false)
+			seatIsLockFun() { //判断座位锁了还是没锁
+				for (let key in this.micSeatJson) {
+					if ((this.roomInfo.seat & key) == 0) {
+						this.$set(this.micSeatJson[key], "islock", true)
+					} else {
+						this.$set(this.micSeatJson[key], "islock", false)
 					}
 				}
 				console.log(this.micSeatJson)
 			},
 			async addRoom() { //加入房间的验证
-					let result = await ReqWebApi(addRoom + this.RoomId, 'PUT', {}, getToken(this), this, 'addRoom', '', true);
-					console.log('加入房间是否成功', result)
-					if (result.data.code == 0) {
-						await this.onloadPromis()
-					} 
+				let result = await ReqWebApi(addRoom + this.RoomId, 'PUT', {}, getToken(this), this, 'addRoom', '', true);
+				console.log('加入房间是否成功', result)
+				if (result.data.code == 0) {
+					await this.onloadPromis()
+				}
 
 			},
 			getRtmToken() { //获得实时消息的token
@@ -932,18 +953,18 @@
 				console.log('userid', this.$store.state.userTokenMsg.userid)
 				let result = await ReqWebApi(upMicPath, 'POST', {
 					roomid: this.roomInfo.id,
-					userid:id,
-					seat: this.masterTakeOtherSeat>0?parseInt(this.masterTakeOtherSeat):0
+					userid: id,
+					seat: this.masterTakeOtherSeat > 0 ? parseInt(this.masterTakeOtherSeat) : 0
 				}, getToken(this), this, 'upMic', '', true)
 				if (result.data.code == 0) {
 					//这个地方走IM 在麦上通知更新视图
 					console.log(result)
 					this.masterTakeOtherSeat = 0;
-					if(id == 0){
+					if (id == 0) {
 						rtcModule.doConfigEngine(1)
 						this.upMicTextIsShow = false; //隐藏文字显示图标
-					}else{
-						
+					} else {
+
 					}
 
 
@@ -954,14 +975,14 @@
 				console.log(id == this.$store.state.userMsg.id)
 				let result = await ReqWebApi(downMicPath, 'POST', {
 					roomid: this.roomInfo.id,
-					userid:id == this.$store.state.userMsg.id?0:id
+					userid: id == this.$store.state.userMsg.id ? 0 : id
 				}, getToken(this), this, 'downMic', id, true);
 				if (result.data.code == 0) {
-					if(id == this.$store.state.userMsg.id){
+					if (id == this.$store.state.userMsg.id) {
 						rtcModule.doConfigEngine(2)
 						this.upMicTextIsShow = true; //显示上麦文字
 						this.$refs.selectPopups.close()
-					}else{
+					} else {
 						this.$refs.masterHandle.close()
 					}
 				}
@@ -1034,7 +1055,7 @@
 				//绑定用户
 				let bindUserBuf = exchangeToBuf("api.ReqBindUser", {
 					token: getToken(this),
-					json:true
+					json: true
 				}, "api.BindUser", [1, 0])
 				// 创建一个this.socketTask对象【发送、接收、关闭socket都由这个对象操作】
 				this.socketTask = uni.connectSocket({
@@ -1054,100 +1075,135 @@
 						},
 					});
 					this.socketTask.onMessage((res) => {
-						console.log("收到服务器内容：" +res.data);
+						console.log("收到服务器内容：" + res.data);
 						let result = JSON.parse(res.data)
-						let {BufID} = result;
-						if(BufID == 1){//第一次连接
-							let {Body} = result;
-							let {giftlist,Money} = Body
-							console.log('礼物列表',giftlist) //this.giftRender
+						let {
+							BufID
+						} = result;
+						if (BufID == 1) { //第一次连接
+							let {
+								Body
+							} = result;
+							let {
+								giftlist,
+								Money
+							} = Body
+							console.log('礼物列表', giftlist) //this.giftRender
 							this.Money = Money
-							if(giftlist.length>8){ //大于1页
-								for(let i=0;i<giftlist.length;i+=8){
-								    this.giftRender.push(giftlist.slice(i,i+8));
+							if (giftlist.length > 8) { //大于1页
+								for (let i = 0; i < giftlist.length; i += 8) {
+									this.giftRender.push(giftlist.slice(i, i + 8));
 								}
-							}else{ //只有1页
+							} else { //只有1页
 								this.giftRender.push(...giftlist);
 							}
-							this.giftRender.forEach((item,index)=>{ //设置默认active属性
-								item.forEach((a,idx)=>{
-									this.$set(this.giftRender[index][idx],'isActive',false)
+							this.giftRender.forEach((item, index) => { //设置默认active属性
+								item.forEach((a, idx) => {
+									this.$set(this.giftRender[index][idx], 'isActive', false)
 								})
 							})
-						}else{//刷礼物连接
-							this.startAnim()
+						} else { //刷礼物连接
+							console.log(result)
 						}
 					});
 				})
 			},
-			sendGiftFromCompo(json){ //发送礼物
+			sendGiftFromCompo(json) { //发送礼物
 				//验证有没有选择人
-				 if(!this.masterSeat.isSelect && this.forEachMic()==-1){
-					 uni.showToast({
-					 	title:'请选择要送礼物的人',
-						icon:'none'
-					 })
-					 return false
-				 }
-				 //验证有没有选择礼物
-				 if(this.forEachGiftState()==-1){
-					 uni.showToast({
-					 	title:'请选择要送的礼物',
-					 	icon:'none'
-					 })
-					 return false
-				 }
-				 //发礼物
-				 let ownId = this.$store.state.userMsg.id //自己的id
-				 let roomid = this.roomInfo.id; //房间的id
-				 let sn = ownId+'y'+ new Date().getTime() 
-				 let giftList = []
-				 let userIdList = [];
-				 console.log('我走到这了吗')
-				 let {gift,num} = json;
-				 let {giftid} = gift.msg;
-					//写到这里了
-				 if(this.masterSeat.isSelect && this.masterSeat.id !=ownId){
-					userIdList.push(this.masterSeat.id) 
-				 }
-				 for(let key in this.micSeatJson){ //每次点击监听人有没有
-				 	if(this.micSeatJson[key].isSelect && this.micSeatJson[key].id !=ownId){
-				 		userIdList.push(this.micSeatJson[key].id)
-				 	}
-				 }
-				 console.log(userIdList);
-				 if(this.giftTemporaryBoolean){ //将发送的礼物推入到数组中
-					 console.log('我执行了')
-					 this.giftTemporaryBoolean = false;
-					 this.sendNum++
-					 setTimeout(()=>{
-						 //调用socket发送
-						  console.log('我是这两秒的结果',this.sendNum);
-						  console.log(Number(roomid))
-						  console.log(userIdList)
-						  let jsons ={}
-						  jsons[giftid] = this.sendNum;
-						  console.log(jsons)
-						  let sendGift = exchangeToBuf("api.ReqSendGift", {
-						  	sn,
-						  	roomid: Number(roomid),
-						  	userids: userIdList,
-						  	gift: jsons,
-							json:true
-						  }, "api.SendGift", [2, 0])
-						  this.sendGiftBySocket(sendGift);
-						  this.giftTemporaryArr=[]
-						  this.sendNum=0
-						  console.log('我被情空了')
-						 this.giftTemporaryBoolean=true
-					 },2000)
-				 }else{
-					 //追加临时的变量
-					this.sendNum++
-				 }
-				 
-			
-				
+				if (!this.masterSeat.isSelect && this.forEachMic() == -1) {
+					uni.showToast({
+						title: '请选择要送礼物的人',
+						icon: 'none'
+					})
+					return false
+				}
+				//验证有没有选择礼物
+				if (this.forEachGiftState() == -1) {
+					uni.showToast({
+						title: '请选择要送的礼物',
+						icon: 'none'
+					})
+					return false
+				}
+				//发礼物
+				let ownId = this.$store.state.userMsg.id //自己的id
+				let roomid = this.roomInfo.id; //房间的id
+				let sn = ownId + 'y' + new Date().getTime()
+				let giftList = []
+				let userIdList = [];
+				console.log('我走到这了吗')
+				let {
+					gift,
+					num
+				} = json;
+				let {
+					giftid,
+					price,
+					svga
+				} = gift.msg;
+				//写到这里了
+				console.log(gift)
+				console.log(num)
+
+
+				if (this.masterSeat.isSelect && this.masterSeat.id != ownId) {
+					userIdList.push(this.masterSeat.id)
+				}
+				for (let key in this.micSeatJson) { //每次点击监听人有没有
+					if (this.micSeatJson[key].isSelect && this.micSeatJson[key].id != ownId) {
+						userIdList.push(this.micSeatJson[key].id)
+					}
+				}
+				if (this.Money - (price * num * userIdList.length) < 0) {
+					uni.showToast({
+						title: '你没有足够的钻石',
+						icon: 'none'
+					})
+					return false
+				}
+				//自己需要立即播放动画
+				if (this.giftRenderArr.length > 0) {
+					this.giftRenderArr.push(svga)
+				} else {
+					this.giftRenderArr.push(svga)
+					this.startAnim()
+				}
+
+
+				this.Money -= (price * num * userIdList.length)
+				console.log(userIdList);
+				if (this.giftTemporaryBoolean) { //将发送的礼物推入到数组中
+					console.log('我执行了')
+					this.giftTemporaryBoolean = false;
+					this.sendNum += num
+					setTimeout(() => {
+						//调用socket发送
+						console.log('我是这两秒的结果', this.sendNum);
+						console.log(Number(roomid))
+						console.log(userIdList)
+						let jsons = {}
+						jsons[giftid] = this.sendNum;
+						console.log(jsons)
+						let sendGift = exchangeToBuf("api.ReqSendGift", {
+							sn,
+							roomid: Number(roomid),
+							userids: userIdList,
+							gift: jsons,
+							json: true
+						}, "api.SendGift", [2, 0])
+						this.sendGiftBySocket(sendGift);
+						this.giftTemporaryArr = []
+						this.sendNum = 0
+						console.log('我被情空了')
+						this.giftTemporaryBoolean = true
+					}, 2000)
+				} else {
+					//追加临时的变量
+					this.sendNum += num
+				}
+
+
+
 			},
 			sendGiftBySocket(datas) { //socket 发礼物
 				let that = this
@@ -1161,18 +1217,36 @@
 					});
 				}
 			},
-			forEachMic(){ // 验证是不是没有选择送礼物的人
-				for(let key in this.micSeatJson){
-					if(this.micSeatJson[key].isSelect){
+			//https://xiangwan.oss-cn-beijing.aliyuncs.com/svga/jd/cake.svga
+			onSvgaPlayEnd() { //svga 结束回调
+				console.log('svga结束')
+
+				this.giftRenderArr.shift()
+				if (this.giftRenderArr.length > 0) {
+					this.startAnim()
+				}
+			},
+			startAnim() { //播放SVGA动画 
+				console.log('start anim..');
+				this.$nextTick(() => {
+					this.$refs.jxSvga.startAnimation({
+						url: this.giftRenderArr[0],
+						loop: 1
+					});
+				})
+			},
+			forEachMic() { // 验证是不是没有选择送礼物的人
+				for (let key in this.micSeatJson) {
+					if (this.micSeatJson[key].isSelect) {
 						return this.micSeatJson[key]
 					}
 				}
 				return -1
 			},
-			forEachGiftState(){ //验证礼物有没有被选中
-				for(let a=0;a<this.giftRender.length;a++){
-					for(let i=0;i<this.giftRender[a].length;i++){
-						if(this.giftRender[a][i].isActive){
+			forEachGiftState() { //验证礼物有没有被选中
+				for (let a = 0; a < this.giftRender.length; a++) {
+					for (let i = 0; i < this.giftRender[a].length; i++) {
+						if (this.giftRender[a][i].isActive) {
 							return a
 						}
 					}
@@ -1224,7 +1298,7 @@
 				this.$refs.exchange.open()
 			},
 			async checkOtherUser(id) { //查看消息弹出
-				
+
 				this.$refs.checkUserPopup.open();
 				let result = await ReqWebApi(getUserMsgPath + id, 'GET', {}, getToken(this), this, 'checkOtherUser', id, true);
 				console.log(result)

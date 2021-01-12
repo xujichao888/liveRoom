@@ -3,20 +3,27 @@
 		<view class="select-send-person">
 			<text class="send-text">送给</text>
 			<scroll-view  class="upmic-render" :scroll-x="true" :show-scrollbar="false" >
-				<view class="upmic-list-box">
-					<view 
-						v-for="(item,index) in renderArr" 
-						:key="index" class="upmic-list" 
-						:class="{selectActive:item.isSelect}"
-						@click="selectOne(item)"
-					>
-						<image class="img-avatar" :src="item.avatar" mode="aspectFill"></image>
+				<view class="father-box">
+					<view class="upmic-list-box" v-if="giftEnter=='clickBtn'">
+						<view 
+							v-for="(item,index) in renderArr" 
+							:key="index" class="upmic-list" 
+							:class="{selectActive:item.isSelect,Actives:item.idx==0 && masterSelect}"
+							@click="selectOne(item)"
+						>
+							<image class="img-avatar" :src="item.avatar" mode="aspectFill"></image>
+						</view>
+					</view>
+					<view class="upmic-list-box" v-else>
+						<view class="upmic-list" :class="{selectActive:EnterMsg.isSelect}">
+							<image @click="selectChangeEnter" class="img-avatar" :src="EnterMsg.avatar" mode="aspectFill"></image>
+						</view>
+						
 					</view>
 				</view>
-			
 			</scroll-view>
-			<view class="btn" @click="selectAll" :class="{btnactive:isAllmic}">
-				<text class="select-all-mic">全麦</text>
+			<view class="btn" @click="selectAll" :class="{btnactive:isAllmic,optionsZero:giftEnter!='clickBtn'}" >
+				<text class="select-all-mic" :class="{optionsZeroText:giftEnter!='clickBtn'}">全麦</text>
 			</view>
 		</view>
 		<view class="gift-swiper-box" style="position: relative;">
@@ -55,7 +62,6 @@
 				circleCurror:0, //轮播的焦点
 				selectToggle:false ,//选择数量显隐
 				giftItem:null,
-				
 			}
 		},
 		props: {
@@ -65,16 +71,29 @@
 				type:Array,
 				default:[]
 			},
-			selectNum:Number
+			selectNum:Number,
+			giftEnter:String,
+			EnterMsg:{
+				type:Object,
+				default:{}
+			},
+			masterSelect:Boolean
 		},
 		methods: {
 			selectAll() { //全麦
-				this.isAllmic = !this.isAllmic
-				this.$emit('allControl',this.isAllmic)
+				if(this.giftEnter=='clickBtn'){
+					this.isAllmic = !this.isAllmic
+					this.$emit('allControl',this.isAllmic)
+				}
 			},
 			selectOne(item){ //选择一个人
+			
 				this.isAllmic =false
-				this.$emit('changeSelectState',item.idx)
+				this.$emit('changeSelectState',item.idx);
+				
+			},
+			selectChangeEnter(){
+				this.$emit('changeEnterState')
 			},
 			swiperGift(e){
 				console.log(e)
@@ -127,6 +146,10 @@
 		width: 500rpx;
 		flex-direction: row;
 	}
+	.father-box{
+		width: 500rpx;
+		flex-direction: row;
+	}
 	.btn {
 		width: 105rpx;
 		height: 57rpx;
@@ -173,6 +196,9 @@
 		border-radius: 60rpx;
 	}
 	.selectActive{
+		background-color: #F72585
+	}
+	.Actives{
 		background-color: #F72585
 	}
 	.gift-swiper-box{
@@ -284,5 +310,12 @@
 		border-top-right-radius: 30rpx;
 		flex-direction: column;
 		align-items: center;
+	}
+	.optionsZero{
+		background-color: rgba(0,0,0,0);
+			border-color: #021526;
+	}
+	.optionsZeroText{
+		color: rgba(0,0,0,0);
 	}
 </style>

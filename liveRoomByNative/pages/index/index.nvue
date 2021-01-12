@@ -95,16 +95,35 @@
 		<!-- 单聊消息弹出 -->
 		<d-popup direction="bottom" ref="talkonePeer">
 			<view>
-				<xu-talkonePeerContent @sendMsg="sendMsg" ref="oneTalkContent" />
+				<xu-talkonePeerContent 
+					@sendMsg="sendMsg" 
+					ref="oneTalkContent" 
+					:clickType="TalkOneclickType" 
+					:TalkOneMsgByUserMsg="TalkOneMsgByUserMsg"
+					:notReadNum="notReadNum"
+					/>
 			</view>
 		</d-popup>
 		<!-- 礼物弹出 -->
 		<d-popup direction="bottom" ref="giftPopup" @closeFun='resetMsg'>
 			<view>
 				<xu-popuptitle text="礼物" />
-				<xu-giftcontent :renderArr="giftPersonRender" :giftRender="giftRender" :Money="Money" :selectNum="giftNum"
-				 @changeSelectState="changeSelectStateFromChildCompo" @allControl="selectOnePeerAll" @popupExchange="popupExchange"
-				 @changeGiftActive="changeGiftActive" @sendGiftFromCompo="sendGiftFromCompo" @selectNum="selectGiftNum" />
+				<xu-giftcontent 
+					:renderArr="giftPersonRender" 
+					:giftRender="giftRender" 
+					:Money="Money" 
+					:selectNum="giftNum"
+					:giftEnter="giftEnter"
+					:EnterMsg ="EnterMsg"
+					:masterSelect ="masterSelect"
+					@changeSelectState="changeSelectStateFromChildCompo"
+					 @allControl="selectOnePeerAlls" 
+					 @popupExchange="popupExchange"
+					@changeGiftActive="changeGiftActive"
+					 @sendGiftFromCompo="sendGiftFromCompo"
+					  @selectNum="selectGiftNum" 
+					  @changeEnterState="changeEnterState"
+					  />
 			</view>
 		</d-popup>
 		<!-- 兑换 -->
@@ -117,7 +136,7 @@
 		<!-- 用户消息 -->
 		<d-popup direction="bottom" ref="checkUserPopup">
 			<view>
-				<xu-checkUser :renderJson="checkUserJson" @sendATE="sendATE" @gotoGiftPop="gotoGiftPop" />
+				<xu-checkUser :renderJson="checkUserJson" @sendATE="sendATE" @gotoGiftPop="gotoGiftPop" @talkOnePop="talkOnePop"/>
 			</view>
 		</d-popup>
 		<!-- 下麦按钮，锁麦，取消弹出 -->
@@ -233,6 +252,12 @@
 				giftNum: 1, //送出礼物的基数
 				sendNum: 0, //发礼物的数量
 				giftRenderArr: [], //SVGA渲染数组
+				giftEnter:'clickBtn',//进入礼物弹出的状态
+				EnterMsg:{},//保存点击人的信息
+				masterSelect:false, //房主礼物的选中状态
+				TalkOneclickType:'btnClick',//单聊的进入状态 btnClick点击按钮进入  userMsg 点击checkuser进入
+				TalkOneMsgByUserMsg:{},
+				notReadNum:0,//未读消息
 			}
 		},
 		mounted() {
@@ -255,30 +280,32 @@
 				return this.likeControl ? '已收藏' : '收藏'
 			},
 			giftPersonRender() { //计算上麦的人
-				console.log('我被触发了')
 				let arr = []
-				console.log('看看数据', JSON.stringify(this.masterSeat))
-				console.log(JSON.stringify(this.masterSeat) != "{}")
-				console.log(this.$store.state.userMsg);
-				if (this.$store.state.userMsg == null) {
-					return false
-				}
-				console.log('看看数据2', JSON.stringify(this.micSeatJson))
-				if (JSON.stringify(this.masterSeat) != "{}" && this.masterSeat.id && this.masterSeat.id != this.$store.state.userMsg
-					.id) { //房主是否在麦
-					let json = this.masterSeat
-					json.idx = "0"
-					arr.push(this.masterSeat)
-				}
-				for (let key in this.micSeatJson) { //遍历麦
-					if (this.micSeatJson[key].id && this.micSeatJson[key].id != this.$store.state.userMsg.id) {
-						let json = this.micSeatJson[key]
-						json.idx = key
-						arr.push(json)
+				console.log('我被触发了')
+			
+					
+					console.log('看看数据', JSON.stringify(this.masterSeat))
+					console.log(JSON.stringify(this.masterSeat) != "{}")
+					console.log(this.$store.state.userMsg);
+					if (this.$store.state.userMsg == null) {
+						return false
 					}
-				}
-				console.log('虚拟数据', arr)
-				return arr
+					console.log('看看数据2', JSON.stringify(this.micSeatJson))
+					if (JSON.stringify(this.masterSeat) != "{}" && this.masterSeat.id && this.masterSeat.id != this.$store.state.userMsg
+						.id) { //房主是否在麦
+						
+						this.masterSeat.idx = "0"
+						arr.push(this.masterSeat)
+					}
+					for (let key in this.micSeatJson) { //遍历麦
+						if (this.micSeatJson[key].id && this.micSeatJson[key].id != this.$store.state.userMsg.id) {
+							let json = this.micSeatJson[key]
+							json.idx = key
+							arr.push(json)
+						}
+					}
+					console.log('虚拟数据', arr)
+					return arr
 			}
 		},
 		async onLoad(op) {
@@ -294,6 +321,12 @@
 			// this.test() //测试数据
 		},
 		methods: {
+			talkOnePop(json){ //用户信息弹出聊天列表
+				this.$refs.checkUserPopup.close()
+				this.$refs.talkonePeer.open()
+				this.TalkOneclickType = 'userMsg'
+				this.TalkOneMsgByUserMsg = json
+			},
 			changeGiftSelectNum(num) {
 				this.$refs.giftSelectNum.close()
 				this.giftNum = num
@@ -302,6 +335,7 @@
 				this.$refs.giftSelectNum.open() //打开弹出层
 			},
 			resetMsg() { //重置select 重置礼物arr isActive
+				this.masterSelect  = false
 				this.masterSeat.isSelect = false;
 				for (let key in this.micSeatJson) {
 					this.$set(this.micSeatJson[key], 'isSelect', false)
@@ -313,7 +347,6 @@
 				})
 				this.giftNum = 1
 			},
-
 			sendATE(nickname) { //@别人
 				this.manyTaleValue = "@" + nickname;
 				this.$refs.checkUserPopup.close()
@@ -332,8 +365,9 @@
 				this.$set(this.giftRender[index[0]][index[1]], 'isActive', true);
 				console.log(this.giftRender)
 			},
-			gotoGiftPop(id) { // 去给别人送礼物,不能给自己送礼物
+			gotoGiftPop(json) { // 去给别人送礼物,不能给自己送礼物
 				this.$refs.checkUserPopup.close();
+				let {id} = json
 				if (id == this.$store.state.userMsg.id) {
 					uni.showToast({
 						title: '你不能送给自己礼物',
@@ -342,6 +376,20 @@
 					return false
 				}
 				//这里需要弹出礼物层没写完！！！！！！！
+				
+				this.giftEnter = "clickUser";
+				json.isSelect = true;
+				this.EnterMsg = json;
+				console.log('看看信息',this.EnterMsg)
+				this.$refs.giftPopup.open()
+				if (this.AreadyConnectSocket == false) {
+					this.connectWebsocket()
+				}
+			},
+			changeEnterState(){ //单个人的状态
+				console.log('我去',this.EnterMsg)
+				this.$set(this.EnterMsg,'isSelect',!this.EnterMsg.isSelect)
+				console.log(this.EnterMsg)
 			},
 			handlecheckOptions(json) { //点击了在麦上座位包括房主
 				let {
@@ -366,6 +414,10 @@
 								islock
 							}
 						}
+					}
+				}else{
+					if(jsons.id){
+						this.checkOtherUser(jsons.id)
 					}
 				}
 			},
@@ -499,14 +551,15 @@
 			changeSelectStateFromChildCompo(idx) { //礼物子组件调用函数改变选中状态
 				console.log('我来自子组件', idx)
 				if (idx == 0) {
-					console.log('选择了房主')
-					if (this.masterSeat.isSelect) {
-						this.masterSeat.isSelect = false;
-						return false;
+					
+					if(this.masterSeat.isSelect){
+						this.masterSeat.isSelect = false
+						this.masterSelect = this.masterSeat.isSelect
+						return false
 					}
-					this.selectOnePeerAll(false) //全反
+					this.selectOnePeerAll(false);
 					this.masterSeat.isSelect = true
-
+					this.masterSelect = this.masterSeat.isSelect
 				} else {
 					if (this.micSeatJson[idx].isSelect) {
 						this.$set(this.micSeatJson[idx], 'isSelect', false)
@@ -520,7 +573,19 @@
 			},
 			selectOnePeerAll(state) { //全不选或全选 发礼物的人
 				if (this.masterSeat.id) {
-					this.masterSeat.isSelect = state
+					this.masterSelect =state;
+					this.masterSeat.isSelect = state;
+				}
+				for (let key in this.micSeatJson) {
+					if (this.micSeatJson[key].id) {
+						this.$set(this.micSeatJson[key], 'isSelect', state)
+					}
+				}
+			},
+			selectOnePeerAlls(state) { 
+				if (this.masterSeat.id) {
+					this.masterSelect =state
+					this.masterSeat.isSelect = state;
 				}
 				for (let key in this.micSeatJson) {
 					if (this.micSeatJson[key].id) {
@@ -626,12 +691,14 @@
 							console.log(Msg)
 							let {
 								senduser,
-								gift
+								gift,
+								sn
 							} = Msg;
 							senduser = JSON.parse(senduser)
 							if (senduser.id == this.$store.state.userMsg.id) {
 								console.log('我自己发的我已经播放完了')
 							} else {
+								if(sn[sn.length-1]=='N'){return false}
 								if (this.giftRenderArr.length > 0) {
 									this.giftRenderArr.push(gift[0].svga)
 								} else {
@@ -744,22 +811,65 @@
 							text
 						} = JSON.parse(msg);
 						let {
-							val,
+							id,
 							avatar,
-							uid,
+							val,
+							nickname,
+							content,
 							from,
-							to
+							time,
 						} = JSON.parse(text)
 						let json = {
 							time: serverReceivedTs,
-							val,
+							id,
 							avatar,
-							id: uid,
+							val,
+							nickname,
+							content,
 							from,
-							to
 						}
-						console.log('收到消息', json)
-						_this.$store.state.oneTalkRenderArr.push(json)
+
+						//将列表数据存入storage
+						let Liststorage = uni.getStorageSync('talkList')
+						if(Liststorage){
+							console.log(2)
+							Liststorage[from.toString()] =json
+							uni.setStorageSync('talkList',Liststorage)
+							console.log(uni.getStorageSync('talkList'))
+						}else{
+							console.log(3)
+							let talkJsons ={}
+							talkJsons[from.toString()] =json
+							uni.setStorageSync('talkList',talkJsons)
+							console.log(uni.getStorageSync('talkList'))
+						}
+						if(from == this.$store.state.talkNowUserId){
+							this.$store.state.oneTalkRenderArr.push(json); 
+						}
+						//写到这里
+						this.$set(this.$store.state.talkOnePeerRenderArr,from+'',json);
+						console.log(this.$store.state.talkOnePeerRenderArr)
+						//将聊天记录存入本地
+						let Talkstorage = uni.getStorageSync('takeContent')
+						if(Talkstorage){
+							console.log(4)
+							if(Talkstorage[from.toString()]){
+								console.log(5)
+								Talkstorage[from.toString()].push(json);
+							}else{
+								console.log(6)
+								Talkstorage[from.toString()]=[];
+								Talkstorage[from.toString()].push(json);
+							}
+							uni.setStorageSync('takeContent',Talkstorage);
+						}else{
+							Talkstorage ={}
+							Talkstorage[from.toString()]=[];
+							Talkstorage[from.toString()].push(json);
+							uni.setStorageSync('takeContent',Talkstorage);
+							console.log('我存对了吗',uni.getStorageSync('takeContent'))
+						}
+						
 					}
 
 				})
@@ -1109,8 +1219,9 @@
 				})
 			},
 			sendGiftFromCompo(json) { //发送礼物
+				console.log('从哪里进来',this.giftEnter)
 				//验证有没有选择人
-				if (!this.masterSeat.isSelect && this.forEachMic() == -1) {
+				if (this.giftEnter=='clickBtn' && !this.masterSeat.isSelect && this.forEachMic() == -1) {
 					uni.showToast({
 						title: '请选择要送礼物的人',
 						icon: 'none'
@@ -1125,12 +1236,17 @@
 					})
 					return false
 				}
+				let result=1
+				if(this.giftEnter!="clickBtn"){
+					result = this.forEachALLMicPersonForSN(this.EnterMsg.id);
+				}
 				//发礼物
 				let ownId = this.$store.state.userMsg.id //自己的id
 				let roomid = this.roomInfo.id; //房间的id
-				let sn = ownId + 'y' + new Date().getTime()
+				let sn = ownId + 'y' + new Date().getTime()+(result==-1?"N":'')
 				let giftList = []
 				let userIdList = [];
+				
 				console.log('我走到这了吗')
 				let {
 					gift,
@@ -1145,14 +1261,17 @@
 				console.log(gift)
 				console.log(num)
 
-
-				if (this.masterSeat.isSelect && this.masterSeat.id != ownId) {
-					userIdList.push(this.masterSeat.id)
-				}
-				for (let key in this.micSeatJson) { //每次点击监听人有没有
-					if (this.micSeatJson[key].isSelect && this.micSeatJson[key].id != ownId) {
-						userIdList.push(this.micSeatJson[key].id)
+				if(this.giftEnter=="clickBtn"){
+					if (this.masterSeat.isSelect && this.masterSeat.id != ownId) {
+						userIdList.push(this.masterSeat.id)
 					}
+					for (let key in this.micSeatJson) { //每次点击监听人有没有
+						if (this.micSeatJson[key].isSelect && this.micSeatJson[key].id != ownId) {
+							userIdList.push(this.micSeatJson[key].id)
+						}
+					}
+				}else{
+					userIdList[0] = this.EnterMsg.id;
 				}
 				if (this.Money - (price * num * userIdList.length) < 0) {
 					uni.showToast({
@@ -1168,8 +1287,8 @@
 					this.giftRenderArr.push(svga)
 					this.startAnim()
 				}
-
-
+				
+	
 				this.Money -= (price * num * userIdList.length)
 				console.log(userIdList);
 				if (this.giftTemporaryBoolean) { //将发送的礼物推入到数组中
@@ -1196,14 +1315,22 @@
 						this.sendNum = 0
 						console.log('我被情空了')
 						this.giftTemporaryBoolean = true
-					}, 2000)
+					}, 500)
 				} else {
 					//追加临时的变量
 					this.sendNum += num
 				}
-
-
-
+			},
+			forEachALLMicPersonForSN(id){ //判断当前的人是不是在麦上
+				for(let key in this.micSeatJson){
+					if(this.micSeatJson[key].id == id){
+						return 1
+					}
+				}
+				if(this.masterSeat.id == id){
+					return 1
+				}
+				return -1
 			},
 			sendGiftBySocket(datas) { //socket 发礼物
 				let that = this
@@ -1255,10 +1382,11 @@
 			},
 			sendMsg(json) { //发送单聊消息
 				let {
-					uid
+					id
 				} = json;
 				console.log('发消息的json', json)
-				rtcModule.sendMessageText(JSON.stringify(json), uid, true, true, true)
+				console.log(id)
+				rtcModule.sendMessageText(JSON.stringify(json), id, true, true, true)
 			},
 			getOtherMsg() {
 
@@ -1284,9 +1412,11 @@
 				this.$refs.sortPopup.open()
 			},
 			toggleMessagePopup() { //单聊消息弹出层
+				this.TalkOneclickType ='btnClick'
 				this.$refs.talkonePeer.open()
 			},
 			toggleGiftPopup() { //礼物弹出
+				this.giftEnter ='clickBtn'
 				this.$refs.giftPopup.open();
 				//连接socket
 				if (this.AreadyConnectSocket == false) {

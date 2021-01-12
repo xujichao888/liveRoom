@@ -6,6 +6,9 @@
 		<view class="user2" @click="user2Nav">
 			<text>user2</text>
 		</view>
+		<view class="user2" @click="user3Nav">
+			<text>user3</text>
+		</view>
 	</view>
 </template>
 
@@ -13,6 +16,11 @@
 	export default {
 		onLoad() {
 			
+		},
+		data(){
+			return{
+				aaa:123
+			}
 		},
 		methods:{
 			user1Nav(){
@@ -23,6 +31,11 @@
 			user2Nav(){
 				uni.navigateTo({
 					url:"/pages/index/index?msg=627fca9561bba7b269e7a88ed8b909e9a825e381099f7b42bab314be03aeff885"
+				})
+			},
+			user3Nav(){
+				uni.navigateTo({
+					url:"/pages/index/index?msg=ef737a253ee1abd72536ea25c3c1db86a1fbc608c61dc5cd38fbaa5286d6c6c15"
 				})
 			}
 			

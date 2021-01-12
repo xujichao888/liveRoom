@@ -2,7 +2,7 @@
 	<view class="talk-one-peer-list" @click="clickCallback">
 		
 		<view class="avatar">
-			<image  class="avatar-img" :src="renderJson.avatar" mode="widthFix"></image>
+			<image  class="avatar-img" :src="renderJson.avatar" mode="aspectFill"></image>
 		</view>
 		<view class="nickname-content">
 			<text class="nickname">{{renderJson.nickname}}</text>

@@ -53,6 +53,7 @@
 					text="私聊" 
 					imgWidth="60rpx"
 					type="3"
+					@clickHandle ="talkOnePop"
 				/>
 			</view>
 		</view>
@@ -125,8 +126,11 @@
 				this.$emit('sendATE',this.renderJson.nickname)
 			},
 			gotoGiftPop(){
-				this.$emit('gotoGiftPop',this.renderJson.id)
+				this.$emit('gotoGiftPop',this.renderJson)
 			},
+			talkOnePop(){
+				this.$emit('talkOnePop',this.renderJson)
+			}
 			
 		}
 	}

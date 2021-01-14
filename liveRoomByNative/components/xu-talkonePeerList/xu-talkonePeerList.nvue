@@ -2,20 +2,21 @@
 	<view class="talk-one-peer-list" @click="clickCallback">
 		
 		<view class="avatar">
-			<image  class="avatar-img" :src="renderJson.avatar" mode="aspectFill"></image>
+			<image  class="avatar-img" :src="isSystemMsg?renderJson.image:renderJson.avatar" mode="aspectFill"></image>
 		</view>
 		<view class="nickname-content">
-			<text class="nickname">{{renderJson.nickname}}</text>
-			<text class="content">{{renderJson.content}}</text>
+			<text class="nickname">{{isSystemMsg?renderJson.title:renderJson.nickname}}</text>
+			<text class="content">{{isSystemMsg?renderJson.content:renderJson.content}}</text>
 		</view>
 		<view class="time-notRead">
-			<text class="time">{{exchange(renderJson.time)}}</text>
-			<text class="red-circle">99</text>
+			<text class="time">{{isSystemMsg?exchangeTime:exchange(renderJson.time)}}</text>
+			<text class="red-circle" v-if="renderJson.notReadNum">{{isSystemMsg?'':renderJson.notReadNum>99?'...':renderJson.notReadNum}}</text>
 		</view>
 	</view>
 </template>
 
 <script>
+	//
 	import exchangeTime from '@/static/publicJs/exchangeTime.js'
 	export default {
 		props:{
@@ -28,7 +29,35 @@
 					time:''
 				}
 			},
+			isSystemMsg:Boolean
 		
+		},
+		computed:{
+			exchangeTime(){
+				if(this.isSystemMsg){
+					function change(t) {
+						if (t < 10) {
+							return "0" + t;
+						} else {
+							return t;
+						}
+					}
+					// "2020-12-28 08:45:05"
+					if(!this.renderJson.addtime){return false}
+					let str = this.renderJson.addtime
+					let arr = str.split(' ')
+					let arr2=  arr[0].split('-')
+					let arr3 = arr[1].split(':')
+					let now = new Date()
+					let Y = now.getFullYear();
+					let M = (now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1);
+					let D = change(now.getDate())
+					if (Y == arr2[0] && M == arr2[1] && D == arr2[2]) {
+						return '今天' + ' ' + arr3[0] + arr3[1]
+					}
+					return  arr2[1]+ '月 ' + arr2[2] + ' 日';
+				}
+			}
 		},
 		methods:{
 			exchange(val){
@@ -102,7 +131,6 @@
 	.time-notRead{
 		width: 150rpx;
 		height: 136rpx;
-		justify-content: center;
 		align-items: flex-end;
 	}
 	.red-circle{
@@ -120,5 +148,7 @@
 	.time{
 		font-size: 22rpx;
 		color: #B8B8B8;
+		margin-top: 20rpx;
+		margin-bottom: 10rpx;
 	}
 </style>

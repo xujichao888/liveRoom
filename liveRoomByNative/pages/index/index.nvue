@@ -134,7 +134,7 @@
 			</view>
 		</d-popup>
 		<!-- 用户消息 -->
-		<d-popup direction="bottom" ref="checkUserPopup">
+		<d-popup direction="bottom" ref="checkUserPopup" @closeFun="resetTalkNowUserId">
 			<view>
 				<xu-checkUser :renderJson="checkUserJson" @sendATE="sendATE" @gotoGiftPop="gotoGiftPop" @talkOnePop="talkOnePop"/>
 			</view>
@@ -321,6 +321,9 @@
 			// this.test() //测试数据
 		},
 		methods: {
+			resetTalkNowUserId(){
+				this.$store.state.talkNowUserId=-1
+			},
 			talkOnePop(json){ //用户信息弹出聊天列表
 				this.$refs.checkUserPopup.close()
 				this.$refs.talkonePeer.open()
@@ -828,48 +831,80 @@
 							content,
 							from,
 						}
-
+						
 						//将列表数据存入storage
+						let ownid = this.$store.state.userMsg.id
 						let Liststorage = uni.getStorageSync('talkList')
-						if(Liststorage){
-							console.log(2)
-							Liststorage[from.toString()] =json
+						console.log('我以前的数据',Liststorage)
+						if(Liststorage && Liststorage[ownid] ){
+							if(Liststorage[ownid][from.toString()]){
+								let {notReadNum} =Liststorage[ownid][from.toString()]
+								console.log('notReadNum',notReadNum)
+								if(from == this.$store.state.talkNowUserId){
+									console.log('1个我草true')
+									json.notReadNum = 0;
+									this.$store.state.oneTalkRenderArr.push(json); 
+								}else{
+									console.log('1个我草false')
+									Liststorage[ownid][from.toString()]['notReadNum'] = ++notReadNum
+									console.log('我加上了吗',Liststorage[ownid][from.toString()])
+									json.notReadNum = notReadNum
+									console.log('我加上了吗2',json.notReadNum)
+								}
+								Liststorage[ownid][from.toString()] =json 
+							}else{
+								Liststorage[ownid][from.toString()]={}
+								if(from == this.$store.state.talkNowUserId){
+									this.$store.state.oneTalkRenderArr.push(json); 
+								}else{
+									json.notReadNum =1
+									Liststorage[ownid][from.toString()]['notReadNum'] = 1
+								}
+								Liststorage[ownid][from.toString()] =json 
+							}
+							// if(from == this.$store.state.talkNowUserId){
+							// 	this.$store.state.oneTalkRenderArr.push(json); 
+							// }else{
+							// 	Liststorage[ownid][from.toString()]['notReadNum'] = ++Liststorage[ownid][from.toString()].notReadNum
+							// }
 							uni.setStorageSync('talkList',Liststorage)
 							console.log(uni.getStorageSync('talkList'))
 						}else{
-							console.log(3)
 							let talkJsons ={}
-							talkJsons[from.toString()] =json
+							talkJsons[ownid]={}
+							talkJsons[ownid][from.toString()] =json;
+							console.log('我的值',from,this.$store.state.talkNowUserId)
+							if(from == this.$store.state.talkNowUserId){
+								this.$store.state.oneTalkRenderArr.push(json); 
+							}else{
+								talkJsons[ownid][from.toString()]['notReadNum'] = 1
+							}
 							uni.setStorageSync('talkList',talkJsons)
-							console.log(uni.getStorageSync('talkList'))
+							console.log('这个人没和我聊过',uni.getStorageSync('talkList'))
 						}
-						if(from == this.$store.state.talkNowUserId){
-							this.$store.state.oneTalkRenderArr.push(json); 
-						}
+					
 						//写到这里
-						this.$set(this.$store.state.talkOnePeerRenderArr,from+'',json);
+						let ListstorageNew = uni.getStorageSync('talkList')
+						this.$set(this.$store.state,'talkOnePeerRenderArr',ListstorageNew[ownid])
 						console.log(this.$store.state.talkOnePeerRenderArr)
 						//将聊天记录存入本地
 						let Talkstorage = uni.getStorageSync('takeContent')
-						if(Talkstorage){
-							console.log(4)
-							if(Talkstorage[from.toString()]){
-								console.log(5)
-								Talkstorage[from.toString()].push(json);
+						if(Talkstorage && Talkstorage[ownid]){
+							if(Talkstorage[ownid][from.toString()]){
+								Talkstorage[ownid][from.toString()].push(json);
 							}else{
-								console.log(6)
-								Talkstorage[from.toString()]=[];
-								Talkstorage[from.toString()].push(json);
+								Talkstorage[ownid][from.toString()]=[];
+								Talkstorage[ownid][from.toString()].push(json);
 							}
 							uni.setStorageSync('takeContent',Talkstorage);
 						}else{
 							Talkstorage ={}
-							Talkstorage[from.toString()]=[];
-							Talkstorage[from.toString()].push(json);
+							Talkstorage[ownid]={}
+							Talkstorage[ownid][from.toString()]=[];
+							Talkstorage[ownid][from.toString()].push(json);
 							uni.setStorageSync('takeContent',Talkstorage);
 							console.log('我存对了吗',uni.getStorageSync('takeContent'))
 						}
-						
 					}
 
 				})
